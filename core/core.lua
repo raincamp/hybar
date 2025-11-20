@@ -1,7 +1,7 @@
 local _, _hyb = ...
 local L, util, bar, conf = _hyb.locales, _hyb.util, _hyb.bar, _hyb.conf
 
-local load_message = { L["WELCOME_LINE_2"] , L["WELCOME_LINE_3"] }
+local load_message = { L["WELCOME_LINE_2"], L["WELCOME_LINE_3"] }
 
 local coreFrame = util.Frame("Frame", "CORE_FRAME", UIParent)
 coreFrame:RegisterEvent("ADDON_LOADED")
@@ -9,17 +9,30 @@ coreFrame:RegisterEvent("ADDON_LOADED")
 
 local function OnEvent(_, _, addOnName)
     if addOnName == "hybar" then
+        -- Unregister event after loading (performance)
+        coreFrame:UnregisterEvent("ADDON_LOADED")
+
+        -- Initialize user settings
         conf.SetUser()
         local user = _hybar_user
 
-        if user.enabled then
-            _G["HYBAR_BAR_FRAME"]:Show()
-            _G["HYBAR_BAR_FRAME"]:ClearAllPoints()
-            _G["HYBAR_BAR_FRAME"]:SetPoint(user.point, UIParent, user.rel_point, user.x_offset, user.y_offset)
-        else
-            _G["HYBAR_BAR_FRAME"]:Hide()
+        -- Get bar frame reference with validation
+        local barFrame = _hyb.frames and _hyb.frames.bar
+        if not barFrame then
+            util.SystemMsg("Error: hybar frame not initialized")
+            return
         end
 
+        -- Show/hide and position the bar based on user settings
+        if user.enabled then
+            barFrame:Show()
+            barFrame:ClearAllPoints()
+            barFrame:SetPoint(user.point, UIParent, user.rel_point, user.x_offset, user.y_offset)
+        else
+            barFrame:Hide()
+        end
+
+        -- Display welcome message if enabled
         if user.welcomeMsg then
             util.SystemMsgEm()
             for _, line in ipairs(load_message) do
