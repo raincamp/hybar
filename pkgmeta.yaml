@@ -1,4 +1,24 @@
-package-as: hybar 
+package-as: hybar
 
 ignore:
-  - Readme.md
+  # GitHub-specific files
+  - .github/
+
+  # IDE configurations
+  - .vscode/
+  - .idea/
+
+  # Git files
+  - .git/
+  - .gitignore
+  - .gitattributes
+  - .editorconfig
+
+  # Internal development documentation
+  - CLAUDE.md
+
+  # Documentation directory (not needed in packaged addon)
+  - docs/
+
+  # All markdown files (README, CHANGELOG, SECURITY, etc.)
+  - "*.md"
