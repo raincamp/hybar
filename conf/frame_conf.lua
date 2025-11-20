@@ -1,13 +1,16 @@
-local _, _hyb = ...
-local L, conf, util  = _hyb.locales, _hyb.conf, _hyb.util
+local _, _hyb       = ...
+local L, conf, util = _hyb.locales, _hyb.conf, _hyb.util
 
-local padding = 16
+-- Initialize frames namespace if not already done
+_hyb.frames         = _hyb.frames or {}
+
+local padding       = 16
 
 -- HYBAR_CONFIG_FRAME
-local f = util.Frame("Frame", "CONFIG_FRAME", UIParent)
+local f             = util.Frame("Frame", "CONFIG_FRAME", UIParent)
 
 f:SetPoint("CENTER")
-f:SetSize(300,230)
+f:SetSize(300, 230)
 f:SetMovable(true)
 f:EnableMouse(true)
 f:RegisterForDrag("LeftButton")
@@ -36,7 +39,7 @@ local titleText = util.Text(panel, "|cFF00FFFF" .. L["hybar"] .. "|r", "SystemFo
 
 titleText:SetPoint("TOP", panel)
 
-local footerText = util.Text(panel, "|cFF00FFFF" .. L["VERSION"] .. "|r" .." | " .. L["GITHUB_URL"], "SystemFont_Tiny")
+local footerText = util.Text(panel, "|cFF00FFFF" .. L["VERSION"] .. "|r" .. " | " .. L["GITHUB_URL"], "SystemFont_Tiny")
 footerText:SetPoint("BOTTOM", panel)
 
 -- hr
@@ -63,7 +66,7 @@ optionsText:SetPoint("TOPLEFT", optionsFrame)
 -- enabled
 local cbEnabled = util.Checkbox(optionsFrame, "ENABLED", 0, -padding - 6, L["USER_ENABLED"])
 
-cbEnabled.tooltip = L["USER_ENABLED_TOOLTIP"] 
+cbEnabled.tooltip = L["USER_ENABLED_TOOLTIP"]
 cbEnabled:SetScript("OnClick", conf.EnabledCheckBoxOnClick)
 
 -- locked
@@ -77,3 +80,6 @@ local cbWelcome = util.Checkbox(optionsFrame, "WELCOME_MSG", 0, -padding * 5 - 6
 
 cbWelcome.tooltip = L["USER_WELCOME_MSG_TOOLTIP"]
 cbWelcome:SetScript("OnClick", conf.WelcomeCheckBoxOnClick)
+
+-- Store config frame reference in namespace
+_hyb.frames.config = f

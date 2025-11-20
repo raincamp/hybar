@@ -3,6 +3,9 @@ local L = _hyb.locales
 
 if _hyb.util then return end
 
+-- Local references for performance
+local floor = math.floor
+
 local util = {}
 
 util.SystemMsg = function(msg)

@@ -1,34 +1,48 @@
 local _, _hyb = ...
 local L, util, conf = _hyb.locales, _hyb.util, _hyb.conf
+
+-- Initialize bar module and frames namespace
 local bar = _hyb.bar or {}
+_hyb.frames = _hyb.frames or {}
 
 local BUTTON_SIZE = 32
 local PADDING = 2
 local NUM_BUTTONS = 2
 local BUTTON_SPACING = 2.2
 
-local f = util.Frame("Frame", "BAR_FRAME", UIParent, "SecureHandlerStateTemplate")
+local f = util.Frame("Frame", "BAR_FRAME", UIParent)
 
 local fbg = f:CreateTexture("BACKGROUND")
 
 fbg:SetAllPoints(true)
 fbg:SetColorTexture(0, 0, 0, 0.8)
 
-for i = 1, 2 do
-    local buttons = {}
-    local button = CreateFrame("Button", "$parentButton" .. i, f, "SecureActionButtonTemplate, ActionButtonTemplate")
-    
-    button.icon = _G[button:GetName() .. "Icon"]
-    button.icon:SetTexture(L["icon" .. tostring(i)])
-    button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    
+-- Store buttons for future access
+local buttons = {}
+
+for i = 1, NUM_BUTTONS do
+    -- Create secure action button (no ActionButtonTemplate to avoid taint)
+    local button = CreateFrame("Button", "$parentButton" .. i, f, "SecureActionButtonTemplate")
+
+    -- Enable mouse interaction on the button
+    button:EnableMouse(true)
+    button:RegisterForClicks("AnyUp")
+
+    -- Create icon texture manually instead of relying on template
+    local icon = button:CreateTexture(nil, "BACKGROUND")
+    icon:SetAllPoints(button)
+    icon:SetTexture(L["icon" .. tostring(i)])
+    icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    button.icon = icon
+
     button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
-    button:SetPoint("LEFT", f, "LEFT", PADDING + ((i-1) * (BUTTON_SIZE + BUTTON_SPACING)), 0)
+    button:SetPoint("LEFT", f, "LEFT", PADDING + ((i - 1) * (BUTTON_SIZE + BUTTON_SPACING)), 0)
 
+    -- Set secure attributes for macro execution
     button:SetAttribute("type", "macro")
-    button:SetAttribute("macrotext", L["tooltip" .. tostring(i)] .. " ".. L["hyb" .. tostring(i)])
-    button:SetNormalTexture(0)
+    button:SetAttribute("macrotext", L["tooltip" .. tostring(i)] .. " " .. L["hyb" .. tostring(i)])
 
+    -- Add tooltips directly to the button
     button:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_TOP")
         GameTooltip:SetText(L["tooltip" .. tostring(i)], 1, 1, 1)
@@ -40,11 +54,16 @@ for i = 1, 2 do
         GameTooltip:Hide()
     end)
 
-    button:GetHighlightTexture():SetTexture(nil)
-    button:GetPushedTexture():SetTexture(nil)
+    -- Create highlight texture manually
+    local highlight = button:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetAllPoints(button)
+    highlight:SetColorTexture(1, 1, 1, 0.3)
 
     buttons[i] = button
 end
+
+-- Store button references in namespace
+bar.buttons = buttons
 
 
 local OnFrameDragStart = function()
@@ -82,4 +101,6 @@ f:SetScript("OnDragStart", OnFrameDragStart)
 f:SetScript("OnDragStop", OnFrameDragStop)
 f:SetClampedToScreen(true)
 
+-- Store frame references in namespace for easy access
+_hyb.frames.bar = f
 _hyb.bar = bar
