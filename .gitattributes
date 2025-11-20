@@ -1,0 +1,39 @@
+# Git attributes for hybar WoW addon
+# Ensures consistent line endings across platforms
+
+# Auto-detect text files and normalize to LF
+* text=auto eol=lf
+
+# Lua files - explicit LF
+*.lua text eol=lf
+
+# Documentation - explicit LF
+*.md text eol=lf
+*.txt text eol=lf
+
+# WoW addon files - explicit LF
+*.toc text eol=lf
+*.xml text eol=lf
+
+# Configuration files - explicit LF
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+
+# Image files - binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.tga binary
+*.blp binary
+
+# Font files - binary
+*.ttf binary
+*.otf binary
+
+# Archive files - binary
+*.zip binary
+*.tar binary
+*.gz binary
