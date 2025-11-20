@@ -5,13 +5,16 @@
 # Local documentation scraps
 docs/
 
-# Lua compiled files
+# Lua compiled files and debug files
 *.luac
+luac.out
 
 # Temporary files
 *.tmp
 *.bak
 *~
+*.swp
+*.swo
 
 # OS-specific files
 .DS_Store
