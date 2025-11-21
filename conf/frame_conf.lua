@@ -10,7 +10,7 @@ local padding       = 16
 local f             = util.Frame("Frame", "CONFIG_FRAME", UIParent)
 
 f:SetPoint("CENTER")
-f:SetSize(300, 230)
+f:SetSize(300, 320)
 f:SetMovable(true)
 f:EnableMouse(true)
 f:RegisterForDrag("LeftButton")
@@ -87,6 +87,12 @@ local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding
 
 transparencySlider.tooltip = L["USER_TRANSPARENCY_TOOLTIP"]
 transparencySlider:SetScript("OnValueChanged", conf.TransparencySliderOnValueChanged)
+
+-- scale slider
+local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 11 - 10, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
+
+scaleSlider.tooltip = L["USER_SCALE_TOOLTIP"]
+scaleSlider:SetScript("OnValueChanged", conf.ScaleSliderOnValueChanged)
 
 -- Store config frame reference in namespace
 _hyb.frames.config = f

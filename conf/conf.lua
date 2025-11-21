@@ -82,28 +82,18 @@ local function SetupConf()
 		if cbWelcome then
 			cbWelcome:SetChecked(_hybar_user.welcomeMsg)
 		end
-<<<<<<< HEAD
-	end
-
-	function conf:EnabledCheckBoxOnClick()
-		_hybar_user.enabled = self:GetChecked()
-		local barFrame = _hyb.frames and _hyb.frames.bar
-		if barFrame then
-			if _hybar_user.enabled then
-				barFrame:Show()
-			else
-				barFrame:Hide()
-			end
-		end
-	end
-
-=======
 
 		-- Update transparency slider
 		local transparencySlider = _G["HYBAR_SLIDER_TRANSPARENCY"]
 		if transparencySlider then
 			transparencySlider:SetValue(_hybar_user.transparency)
 		end
+
+		-- Update scale slider
+		local scaleSlider = _G["HYBAR_SLIDER_SCALE"]
+		if scaleSlider then
+			scaleSlider:SetValue(_hybar_user.scale)
+		end
 	end
 
 	function conf:EnabledCheckBoxOnClick()
@@ -118,7 +108,6 @@ local function SetupConf()
 		end
 	end
 
->>>>>>> 3b07ea1 (feat: add transparency slider to configuration (refs #36))
 	function conf:LockedCheckBoxOnClick()
 		_hybar_user.locked = self:GetChecked()
 	end
@@ -127,8 +116,6 @@ local function SetupConf()
 		_hybar_user.welcomeMsg = self:GetChecked()
 	end
 
-<<<<<<< HEAD
-=======
 	function conf:TransparencySliderOnValueChanged(value)
 		_hybar_user.transparency = value
 		local barFrame = _hyb.frames and _hyb.frames.bar
@@ -137,7 +124,14 @@ local function SetupConf()
 		end
 	end
 
->>>>>>> 3b07ea1 (feat: add transparency slider to configuration (refs #36))
+	function conf:ScaleSliderOnValueChanged(value)
+		_hybar_user.scale = value
+		local barFrame = _hyb.frames and _hyb.frames.bar
+		if barFrame then
+			barFrame:SetScale(value)
+		end
+	end
+
 	return conf
 end
 
