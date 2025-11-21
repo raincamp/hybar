@@ -34,12 +34,12 @@ If you discover a security vulnerability in hybar, please help us maintain the s
 Instead, report vulnerabilities privately through one of these methods:
 
 1. **GitHub Security Advisories** (Preferred)
-   - Go to the [Security tab](https://github.com/hyb-devs/hybar/security/advisories)
+   - Go to the [Security tab](https://github.com/raincamp/hybar/security/advisories)
    - Click "Report a vulnerability"
    - Provide detailed information about the vulnerability
 
 2. **Email**
-   - Send to: hyb.devs@gmail.com
+   - Send to: cam@raincamp.ai
    - Subject line: `[SECURITY] hybar vulnerability report`
    - Include detailed reproduction steps and impact assessment
 

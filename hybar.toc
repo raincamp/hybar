@@ -1,12 +1,12 @@
 ## Interface: 11501
 ## Title: hybar
 ## Notes: A dedicated action bar for hyb communication.
-## Author: hyb-devs
+## Author: raincamp
 ## DefaultState: enabled
 ## SavedVariables: _hybar_user
 ## Version: 1.0.2-alpha
 
-## X-Email: hyb.devs@gmail.com
+## X-Email: cam@raincamp.ai
 ## X-Curse-Project-ID: 980904
 ## X-Category: Chat & Communication, Action Bars
 

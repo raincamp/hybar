@@ -7,9 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **hybar** is a World of Warcraft Classic Era addon (Interface 11501) written in Lua. It provides a dedicated 2-button action bar for quick "hell yeah brother" communication in guild chat and yell channels.
 
 **Key Details:**
-- Author: hyb-devs
+- Author: raincamp
 - Version: 1.0.2-alpha
-- Repository: https://github.com/hyb-devs/hybar
+- Repository: https://github.com/raincamp/hybar
 - Curse Project ID: 980904
 
 ## Development Workflow
