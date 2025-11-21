@@ -101,9 +101,14 @@ f:SetScript("OnDragStart", OnFrameDragStart)
 f:SetScript("OnDragStop", OnFrameDragStop)
 f:SetClampedToScreen(true)
 
--- Apply initial transparency from saved settings
-if _hybar_user and _hybar_user.transparency then
-	f:SetAlpha(_hybar_user.transparency)
+-- Apply initial Phase 2 settings from saved variables
+if _hybar_user then
+	if _hybar_user.transparency then
+		f:SetAlpha(_hybar_user.transparency)
+	end
+	if _hybar_user.scale then
+		f:SetScale(_hybar_user.scale)
+	end
 end
 
 -- Store frame references in namespace for easy access
