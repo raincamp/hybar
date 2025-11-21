@@ -29,9 +29,9 @@ L["X Offset"] = "X Offset"
 L["Y Offset"] = "Y Offset"
 
 L["WELCOME_LINE_2"] = " " .. "|cFFFFFFFF/hyb|r to configure"
-L["WELCOME_LINE_3"] = " " .. L["VERSION"] .. " | " .. "https://github.com/hyb-devs/hybar"
+L["WELCOME_LINE_3"] = " " .. L["VERSION"] .. " | " .. "https://github.com/raincamp/hybar"
 
-L["GITHUB_URL"] = "https://github.com/hyb-devs/hybar"
+L["GITHUB_URL"] = "https://github.com/raincamp/hybar"
 L["CONF_FRAME_FOOTER"] = L["VERSION"] .. " | " .. L["GITHUB_URL"]
 
 -- Phase 2: Transparency Slider

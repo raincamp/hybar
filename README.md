@@ -106,7 +106,7 @@ hybar/
 
 - **Issues**: [Report bugs or request features](https://github.com/raincamp/hybar/issues)
 - **CurseForge**: [hybar on CurseForge](https://www.curseforge.com/wow/addons/hybar)
-- **Email**: hyb.devs@gmail.com
+- **Email**: cam@raincamp.ai
 
 ---
 

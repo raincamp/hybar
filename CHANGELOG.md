@@ -47,6 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial development release
 - Basic addon structure and framework
 
-[Unreleased]: https://github.com/hyb-devs/hybar/compare/v1.0.2-alpha...HEAD
-[1.0.2-alpha]: https://github.com/hyb-devs/hybar/compare/v1.0.1-alpha...v1.0.2-alpha
-[1.0.1-alpha]: https://github.com/hyb-devs/hybar/releases/tag/v1.0.1-alpha
+[Unreleased]: https://github.com/raincamp/hybar/compare/v1.0.2-alpha...HEAD
+[1.0.2-alpha]: https://github.com/raincamp/hybar/compare/v1.0.1-alpha...v1.0.2-alpha
+[1.0.1-alpha]: https://github.com/raincamp/hybar/releases/tag/v1.0.1-alpha
