@@ -1,4 +1,5 @@
 local _, _hyb = ...
+local L, util = _hyb.locales, _hyb.util
 
 
 local function SetupConf()
@@ -130,6 +131,25 @@ local function SetupConf()
 		if barFrame then
 			barFrame:SetScale(value)
 		end
+	end
+
+	function conf:ResetPositionButtonOnClick()
+		-- Reset position to defaults
+		_hybar_user.point = defaults.point
+		_hybar_user.rel_point = defaults.rel_point
+		_hybar_user.x_offset = defaults.x_offset
+		_hybar_user.y_offset = defaults.y_offset
+
+		-- Apply position immediately to bar frame
+		local barFrame = _hyb.frames and _hyb.frames.bar
+		if barFrame then
+			barFrame:ClearAllPoints()
+			barFrame:SetPoint(_hybar_user.point, UIParent, _hybar_user.rel_point, _hybar_user.x_offset,
+				_hybar_user.y_offset)
+		end
+
+		-- Show confirmation message
+		util.SystemMsg(L["RESET_POSITION_CONFIRM"])
 	end
 
 	return conf

@@ -10,7 +10,7 @@ local padding       = 16
 local f             = util.Frame("Frame", "CONFIG_FRAME", UIParent)
 
 f:SetPoint("CENTER")
-f:SetSize(300, 320)
+f:SetSize(300, 360)
 f:SetMovable(true)
 f:EnableMouse(true)
 f:RegisterForDrag("LeftButton")
@@ -93,6 +93,13 @@ local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 11 - 10, 20
 
 scaleSlider.tooltip = L["USER_SCALE_TOOLTIP"]
 scaleSlider:SetScript("OnValueChanged", conf.ScaleSliderOnValueChanged)
+
+-- reset position button
+local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 14 - 10, 150, 22,
+	L["RESET_POSITION_BUTTON"])
+
+resetPosButton.tooltip = L["RESET_POSITION_BUTTON_TOOLTIP"]
+resetPosButton:SetScript("OnClick", conf.ResetPositionButtonOnClick)
 
 -- Store config frame reference in namespace
 _hyb.frames.config = f
