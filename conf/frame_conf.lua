@@ -81,5 +81,12 @@ local cbWelcome = util.Checkbox(optionsFrame, "WELCOME_MSG", 0, -padding * 5 - 6
 cbWelcome.tooltip = L["USER_WELCOME_MSG_TOOLTIP"]
 cbWelcome:SetScript("OnClick", conf.WelcomeCheckBoxOnClick)
 
+-- transparency slider
+local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 8 - 10, 200, 0, 1, 0.01,
+	L["USER_TRANSPARENCY"])
+
+transparencySlider.tooltip = L["USER_TRANSPARENCY_TOOLTIP"]
+transparencySlider:SetScript("OnValueChanged", conf.TransparencySliderOnValueChanged)
+
 -- Store config frame reference in namespace
 _hyb.frames.config = f
