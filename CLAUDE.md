@@ -14,6 +14,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Workflow
 
+### GitHub Operations
+
+**Always use GitHub CLI (`gh`) for all GitHub operations.** Never use git commands, API calls, or web URLs when `gh` CLI commands are available.
+
+Common operations:
+- **List issues**: `gh issue list --label "sprint-X" --state open`
+- **View issue**: `gh issue view <number> --json title,body,labels`
+- **Create PR**: `gh pr create --title "..." --body "..."`
+- **List PRs**: `gh pr list`
+- **View PR**: `gh pr view <number>`
+
+**Important:** Issues are closed automatically when PRs merge to main. Never manually close issues.
+
 ### Testing Changes
 
 Since this is a WoW addon (not a Node.js/build-tool project):
