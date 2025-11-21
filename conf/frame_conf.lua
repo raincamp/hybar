@@ -68,18 +68,42 @@ local cbEnabled = util.Checkbox(optionsFrame, "ENABLED", 0, -padding - 6, L["USE
 
 cbEnabled.tooltip = L["USER_ENABLED_TOOLTIP"]
 cbEnabled:SetScript("OnClick", conf.EnabledCheckBoxOnClick)
+cbEnabled:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+cbEnabled:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- locked
 local cbLocked = util.Checkbox(optionsFrame, "LOCKED", 0, -padding * 3 - 6, L["USER_LOCKED"])
 
 cbLocked.tooltip = L["USER_LOCKED_TOOLTIP"]
 cbLocked:SetScript("OnClick", conf.LockedCheckBoxOnClick)
+cbLocked:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+cbLocked:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- welcomeMsg
 local cbWelcome = util.Checkbox(optionsFrame, "WELCOME_MSG", 0, -padding * 5 - 6, L["USER_WELCOME_MSG"])
 
 cbWelcome.tooltip = L["USER_WELCOME_MSG_TOOLTIP"]
 cbWelcome:SetScript("OnClick", conf.WelcomeCheckBoxOnClick)
+cbWelcome:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+cbWelcome:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- transparency slider
 local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 8 - 10, 200, 0, 1, 0.01,
@@ -87,12 +111,28 @@ local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding
 
 transparencySlider.tooltip = L["USER_TRANSPARENCY_TOOLTIP"]
 transparencySlider:SetScript("OnValueChanged", conf.TransparencySliderOnValueChanged)
+transparencySlider:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+transparencySlider:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- scale slider
 local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 11 - 10, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
 
 scaleSlider.tooltip = L["USER_SCALE_TOOLTIP"]
 scaleSlider:SetScript("OnValueChanged", conf.ScaleSliderOnValueChanged)
+scaleSlider:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+scaleSlider:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- reset position button
 local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 14 - 10, 150, 22,
@@ -100,6 +140,14 @@ local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding *
 
 resetPosButton.tooltip = L["RESET_POSITION_BUTTON_TOOLTIP"]
 resetPosButton:SetScript("OnClick", conf.ResetPositionButtonOnClick)
+resetPosButton:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+resetPosButton:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
 
 -- Store config frame reference in namespace
 _hyb.frames.config = f
