@@ -114,6 +114,14 @@ local function SetupConf()
 		end)
 	end
 
+	-- Helper to flash a control on settings change
+	local function FlashControl(control)
+		local animations = _hyb.animations
+		if animations and animations.Flash then
+			animations.Flash(control, { 0, 1, 0.5 }, 0.3) -- Teal flash
+		end
+	end
+
 	function conf:EnabledCheckBoxOnClick()
 		_hybar_user.enabled = self:GetChecked()
 		local barFrame = _hyb.frames and _hyb.frames.bar
@@ -125,6 +133,7 @@ local function SetupConf()
 				animations.FadeOut(barFrame)
 			end
 		end
+		FlashControl(self)
 	end
 
 	function conf:LockedCheckBoxOnClick()
@@ -137,14 +146,17 @@ local function SetupConf()
 				bar.ShowUnlockIndicator()
 			end
 		end
+		FlashControl(self)
 	end
 
 	function conf:WelcomeCheckBoxOnClick()
 		_hybar_user.welcomeMsg = self:GetChecked()
+		FlashControl(self)
 	end
 
 	function conf:SoundEnabledCheckBoxOnClick()
 		_hybar_user.soundEnabled = self:GetChecked()
+		FlashControl(self)
 	end
 
 	function conf:HighContrastCheckBoxOnClick()
@@ -153,6 +165,7 @@ local function SetupConf()
 		if bar and bar.ApplyHighContrast then
 			bar.ApplyHighContrast(_hybar_user.highContrast)
 		end
+		FlashControl(self)
 	end
 
 	function conf:TransparencySliderOnValueChanged(value)
@@ -161,6 +174,10 @@ local function SetupConf()
 		if barFrame then
 			barFrame:SetAlpha(value)
 		end
+		-- Only flash on mouse release, not every value change
+		if not self._isDragging then
+			FlashControl(self)
+		end
 	end
 
 	function conf:ScaleSliderOnValueChanged(value)
@@ -168,6 +185,10 @@ local function SetupConf()
 		local barFrame = _hyb.frames and _hyb.frames.bar
 		if barFrame then
 			barFrame:SetScale(value)
+		end
+		-- Only flash on mouse release, not every value change
+		if not self._isDragging then
+			FlashControl(self)
 		end
 	end
 
@@ -193,6 +214,8 @@ local function SetupConf()
 		if _hyb.UpdatePositionText then
 			_hyb.UpdatePositionText()
 		end
+
+		FlashControl(self)
 	end
 
 	return conf

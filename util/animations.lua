@@ -102,4 +102,48 @@ function animations.StopFade(frame)
 	end
 end
 
+-- Cache for flash textures per frame
+local flashTextureCache = {}
+
+---Flash a frame with a brief highlight effect
+---@param frame frame The frame to flash
+---@param color table? RGB color {r, g, b} (default cyan)
+---@param duration number? Duration in seconds (default 0.2)
+function animations.Flash(frame, color, duration)
+	color = color or { 0, 1, 1 }
+	duration = duration or 0.2
+
+	-- Get or create flash texture
+	local flashTexture = flashTextureCache[frame]
+	if not flashTexture then
+		flashTexture = frame:CreateTexture(nil, "OVERLAY")
+		flashTexture:SetAllPoints(frame)
+		flashTexture:SetBlendMode("ADD")
+		flashTextureCache[frame] = flashTexture
+	end
+
+	-- Set color and show
+	flashTexture:SetColorTexture(color[1], color[2], color[3], 0.5)
+	flashTexture:Show()
+
+	-- Get or create animation group for flash
+	local flashAnim = flashTexture.flashAnim
+	if not flashAnim then
+		flashAnim = flashTexture:CreateAnimationGroup()
+		local fadeOut = flashAnim:CreateAnimation("Alpha")
+		fadeOut:SetFromAlpha(0.5)
+		fadeOut:SetToAlpha(0)
+		fadeOut:SetSmoothing("OUT")
+		flashAnim.fadeOut = fadeOut
+		flashTexture.flashAnim = flashAnim
+	end
+
+	flashAnim:Stop()
+	flashAnim.fadeOut:SetDuration(duration)
+	flashAnim:SetScript("OnFinished", function()
+		flashTexture:Hide()
+	end)
+	flashAnim:Play()
+end
+
 _hyb.animations = animations
