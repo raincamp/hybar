@@ -10,7 +10,7 @@ local padding       = 16
 local f             = util.Frame("Frame", "CONFIG_FRAME", UIParent)
 
 f:SetPoint("CENTER")
-f:SetSize(300, 360)
+f:SetSize(350, 420)
 f:SetMovable(true)
 f:EnableMouse(true)
 f:RegisterForDrag("LeftButton")
