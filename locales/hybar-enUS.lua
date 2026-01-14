@@ -50,6 +50,9 @@ L["USER_SOUND_ENABLED_TOOLTIP"] = "Play sound effects when clicking buttons"
 L["USER_HIGH_CONTRAST"] = "High Contrast Mode"
 L["USER_HIGH_CONTRAST_TOOLTIP"] = "Increase visual contrast for better visibility"
 
+-- Phase 2: Position Preview
+L["POSITION_LABEL"] = "Position:"
+
 -- Phase 2: Reset Position Button
 L["RESET_POSITION_BUTTON"] = "Reset Position"
 L["RESET_POSITION_BUTTON_TOOLTIP"] = "Reset bar to default position (center of screen)"
