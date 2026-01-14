@@ -55,17 +55,18 @@ local optionsFrame = util.Frame("Frame", "OPTIONS_FRAME", f)
 optionsFrame:SetPoint("TOPLEFT", f, "TOPLEFT", padding, -padding * 4)
 optionsFrame:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -padding, padding)
 
--- options text
-local optionsText = util.Text(optionsFrame, "Options", "SystemFont_Med1")
 
-optionsText:SetPoint("TOPLEFT", optionsFrame)
+-- ============================================================================
+-- SECTION: BEHAVIOR
+-- ============================================================================
 
-
--- options
+local behaviorHeader = util.Text(optionsFrame, L["SECTION_BEHAVIOR"], "SystemFont_Med1")
+behaviorHeader:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, 0)
+behaviorHeader:SetTextColor(0, 1, 1) -- Cyan
 
 -- Color hierarchy for checkbox labels
 -- Critical (Gold): Enable - most important, controls bar visibility
--- Medium (White): Lock, Sound, High Contrast - important settings
+-- Medium (White): Lock, Sound - important settings
 -- Low (Gray): Welcome Message - convenience feature
 
 -- enabled (Critical - Gold)
@@ -86,7 +87,6 @@ end)
 
 -- locked (Medium - White, default)
 local cbLocked = util.Checkbox(optionsFrame, "LOCKED", 0, -padding * 3 - 6, L["USER_LOCKED"])
--- White is default, no color change needed
 
 cbLocked.tooltip = L["USER_LOCKED_TOOLTIP"]
 cbLocked:SetScript("OnClick", conf.LockedCheckBoxOnClick)
@@ -117,7 +117,6 @@ end)
 
 -- sound enabled (Medium - White, default)
 local cbSound = util.Checkbox(optionsFrame, "SOUND_ENABLED", 0, -padding * 7 - 6, L["USER_SOUND_ENABLED"])
--- White is default, no color change needed
 
 cbSound.tooltip = L["USER_SOUND_ENABLED_TOOLTIP"]
 cbSound:SetScript("OnClick", conf.SoundEnabledCheckBoxOnClick)
@@ -130,23 +129,17 @@ cbSound:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
--- high contrast (Medium - White, default)
-local cbHighContrast = util.Checkbox(optionsFrame, "HIGH_CONTRAST", 0, -padding * 9 - 6, L["USER_HIGH_CONTRAST"])
--- White is default, no color change needed
 
-cbHighContrast.tooltip = L["USER_HIGH_CONTRAST_TOOLTIP"]
-cbHighContrast:SetScript("OnClick", conf.HighContrastCheckBoxOnClick)
-cbHighContrast:SetScript("OnEnter", function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
-	GameTooltip:Show()
-end)
-cbHighContrast:SetScript("OnLeave", function(self)
-	GameTooltip:Hide()
-end)
+-- ============================================================================
+-- SECTION: APPEARANCE
+-- ============================================================================
+
+local appearanceHeader = util.Text(optionsFrame, L["SECTION_APPEARANCE"], "SystemFont_Med1")
+appearanceHeader:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, -padding * 9 - 6)
+appearanceHeader:SetTextColor(0, 1, 1) -- Cyan
 
 -- transparency slider
-local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 12 - 10, 200, 0, 1, 0.01,
+local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 11, 200, 0, 1, 0.01,
 	L["USER_TRANSPARENCY"])
 
 transparencySlider.tooltip = L["USER_TRANSPARENCY_TOOLTIP"]
@@ -161,7 +154,7 @@ transparencySlider:SetScript("OnLeave", function(self)
 end)
 
 -- scale slider
-local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 15 - 10, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
+local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 14, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
 
 scaleSlider.tooltip = L["USER_SCALE_TOOLTIP"]
 scaleSlider:SetScript("OnValueChanged", conf.ScaleSliderOnValueChanged)
@@ -174,9 +167,32 @@ scaleSlider:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
+-- high contrast (Medium - White, default)
+local cbHighContrast = util.Checkbox(optionsFrame, "HIGH_CONTRAST", 0, -padding * 16 - 6, L["USER_HIGH_CONTRAST"])
+
+cbHighContrast.tooltip = L["USER_HIGH_CONTRAST_TOOLTIP"]
+cbHighContrast:SetScript("OnClick", conf.HighContrastCheckBoxOnClick)
+cbHighContrast:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+cbHighContrast:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
+
+
+-- ============================================================================
+-- SECTION: POSITION
+-- ============================================================================
+
+local positionHeader = util.Text(optionsFrame, L["SECTION_POSITION"], "SystemFont_Med1")
+positionHeader:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, -padding * 18 - 6)
+positionHeader:SetTextColor(0, 1, 1) -- Cyan
+
 -- position preview text
 local positionLabel = util.Text(optionsFrame, L["POSITION_LABEL"], "SystemFont_Small")
-positionLabel:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, -padding * 18 - 10)
+positionLabel:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, -padding * 20)
 
 local positionText = util.Text(optionsFrame, "", "SystemFont_Small")
 positionText:SetPoint("LEFT", positionLabel, "RIGHT", 4, 0)
@@ -197,7 +213,7 @@ end
 _hyb.UpdatePositionText = UpdatePositionText
 
 -- reset position button
-local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 20 - 10, 150, 22,
+local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 21 - 6, 150, 22,
 	L["RESET_POSITION_BUTTON"])
 
 resetPosButton.tooltip = L["RESET_POSITION_BUTTON_TOOLTIP"]
