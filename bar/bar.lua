@@ -198,6 +198,54 @@ function bar.HideUnlockIndicator()
 	unlockBorder:Hide()
 end
 
+---Apply high contrast mode to bar elements
+---@param enabled boolean
+function bar.ApplyHighContrast(enabled)
+	if enabled then
+		-- High contrast: brighter background, stronger borders
+		fbg:SetColorTexture(0.1, 0.1, 0.1, 0.95)
+		for _, button in ipairs(buttons) do
+			-- Brighter hover glow
+			local origOnEnter = button:GetScript("OnEnter")
+			local origOnLeave = button:GetScript("OnLeave")
+			button._hcOnEnter = origOnEnter
+			button._hcOnLeave = origOnLeave
+			button:SetScript("OnEnter", function(self)
+				self.glow:SetColorTexture(1, 1, 0, 0.7) -- Yellow glow
+				if origOnEnter then origOnEnter(self) end
+			end)
+			button:SetScript("OnLeave", function(self)
+				self.glow:SetColorTexture(1, 1, 0, 0)
+				if origOnLeave then origOnLeave(self) end
+			end)
+		end
+		-- Brighter unlock border
+		unlockBorder:SetBackdropBorderColor(1, 1, 0, 1)
+	else
+		-- Normal contrast
+		fbg:SetColorTexture(0, 0, 0, 0.8)
+		for _, button in ipairs(buttons) do
+			-- Restore original hover handlers with cyan glow
+			local origOnEnter = button._hcOnEnter
+			local origOnLeave = button._hcOnLeave
+			if origOnEnter then
+				button:SetScript("OnEnter", function(self)
+					self.glow:SetColorTexture(0, 1, 1, 0.4)
+					if origOnEnter then origOnEnter(self) end
+				end)
+			end
+			if origOnLeave then
+				button:SetScript("OnLeave", function(self)
+					self.glow:SetColorTexture(0, 1, 1, 0)
+					if origOnLeave then origOnLeave(self) end
+				end)
+			end
+		end
+		-- Normal unlock border
+		unlockBorder:SetBackdropBorderColor(1, 0.82, 0, 0.9)
+	end
+end
+
 -- Store frame references in namespace for easy access
 _hyb.frames.bar = f
 _hyb.frames.unlockBorder = unlockBorder

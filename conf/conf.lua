@@ -89,6 +89,11 @@ local function SetupConf()
 			cbSound:SetChecked(_hybar_user.soundEnabled)
 		end
 
+		local cbHighContrast = _G["HYBAR_CHECKBUTTON_HIGH_CONTRAST"]
+		if cbHighContrast then
+			cbHighContrast:SetChecked(_hybar_user.highContrast)
+		end
+
 		-- Update transparency slider
 		local transparencySlider = _G["HYBAR_SLIDER_TRANSPARENCY"]
 		if transparencySlider then
@@ -133,6 +138,14 @@ local function SetupConf()
 
 	function conf:SoundEnabledCheckBoxOnClick()
 		_hybar_user.soundEnabled = self:GetChecked()
+	end
+
+	function conf:HighContrastCheckBoxOnClick()
+		_hybar_user.highContrast = self:GetChecked()
+		local bar = _hyb.bar
+		if bar and bar.ApplyHighContrast then
+			bar.ApplyHighContrast(_hybar_user.highContrast)
+		end
 	end
 
 	function conf:TransparencySliderOnValueChanged(value)
