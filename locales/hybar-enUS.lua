@@ -50,8 +50,13 @@ L["USER_SOUND_ENABLED_TOOLTIP"] = "Play sound effects when clicking buttons"
 L["USER_HIGH_CONTRAST"] = "High Contrast Mode"
 L["USER_HIGH_CONTRAST_TOOLTIP"] = "Increase visual contrast for better visibility"
 
+-- Phase 2: Section Headers
+L["SECTION_BEHAVIOR"] = "Behavior"
+L["SECTION_APPEARANCE"] = "Appearance"
+L["SECTION_POSITION"] = "Position"
+
 -- Phase 2: Position Preview
-L["POSITION_LABEL"] = "Position:"
+L["POSITION_LABEL"] = "Current:"
 
 -- Phase 2: Reset Position Button
 L["RESET_POSITION_BUTTON"] = "Reset Position"
