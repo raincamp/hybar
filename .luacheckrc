@@ -63,6 +63,7 @@ read_globals = {
     -- WoW API - Misc
     "GetAddOnMetadata",
     "InCombatLockdown",
+    "IsShiftKeyDown",
     "ReloadUI",
     "UISpecialFrames",
 
