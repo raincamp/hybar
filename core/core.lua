@@ -59,3 +59,4 @@ end
 
 
 coreFrame:SetScript("OnEvent", OnEvent)
+-- Test workflow validation
