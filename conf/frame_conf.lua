@@ -277,7 +277,7 @@ end
 local function ActivateFocused()
 	local control = focusableControls[currentFocusIndex]
 	if not control then return end
-	
+
 	-- Check if it's a checkbox
 	if control.GetChecked then
 		control:Click()
@@ -291,7 +291,7 @@ end
 local function AdjustSlider(direction)
 	local control = focusableControls[currentFocusIndex]
 	if not control then return end
-	
+
 	-- Only adjust if it's a slider
 	if control.GetValue and control.SetValue and control.GetMinMaxValues then
 		local minVal, maxVal = control:GetMinMaxValues()
@@ -310,7 +310,7 @@ f:SetPropagateKeyboardInput(true)
 f:SetScript("OnKeyDown", function(self, key)
 	-- Only handle keys when frame is visible
 	if not self:IsVisible() then return end
-	
+
 	if key == "TAB" then
 		self:SetPropagateKeyboardInput(false)
 		if IsShiftKeyDown() then

@@ -16,7 +16,7 @@ local function PrintStatus()
     util.SystemMsg(string.format(L["CMD_STATUS_SCALE"], math.floor(_hybar_user.scale * 100)))
     util.SystemMsg(string.format(L["CMD_STATUS_SOUND"], YesNo(_hybar_user.soundEnabled)))
     util.SystemMsg(string.format(L["CMD_STATUS_HIGH_CONTRAST"], YesNo(_hybar_user.highContrast)))
-    util.SystemMsg(string.format(L["CMD_STATUS_POSITION"], _hybar_user.point, 
+    util.SystemMsg(string.format(L["CMD_STATUS_POSITION"], _hybar_user.point,
         math.floor(_hybar_user.x_offset), math.floor(_hybar_user.y_offset)))
     util.SystemMsg(L["VERSION"])
 end
