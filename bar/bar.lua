@@ -85,9 +85,32 @@ for i = 1, NUM_BUTTONS do
 		if originalOnLeave then originalOnLeave(self) end
 	end)
 
-	-- Play sound on click (PostClick fires after secure action)
-	button:SetScript("PostClick", function()
+	-- Create press flash texture for click feedback
+	local flash = button:CreateTexture(nil, "OVERLAY")
+	flash:SetAllPoints(button)
+	flash:SetColorTexture(1, 1, 1, 0)
+	flash:SetBlendMode("ADD")
+	button.flash = flash
+
+	-- Create animation for press feedback
+	local flashAnim = flash:CreateAnimationGroup()
+	local fadeIn = flashAnim:CreateAnimation("Alpha")
+	fadeIn:SetFromAlpha(0)
+	fadeIn:SetToAlpha(0.6)
+	fadeIn:SetDuration(0.05)
+	fadeIn:SetOrder(1)
+	local fadeOut = flashAnim:CreateAnimation("Alpha")
+	fadeOut:SetFromAlpha(0.6)
+	fadeOut:SetToAlpha(0)
+	fadeOut:SetDuration(0.15)
+	fadeOut:SetOrder(2)
+	button.flashAnim = flashAnim
+
+	-- Play sound and flash on button press (PostClick fires after secure action)
+	button:SetScript("PostClick", function(self)
 		util.PlayButtonSound()
+		self.flashAnim:Stop()
+		self.flashAnim:Play()
 	end)
 
 	buttons[i] = button
