@@ -4,7 +4,7 @@
 ## Author: raincamp
 ## DefaultState: enabled
 ## SavedVariables: _hybar_user
-## Version: 1.0.2-alpha
+## Version: 1.1.0-alpha
 
 ## X-Email: cam@raincamp.ai
 ## X-Curse-Project-ID: 980904
