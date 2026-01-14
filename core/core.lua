@@ -29,7 +29,11 @@ local function OnEvent(_, _, addOnName)
 
         -- Show/hide with fade animation based on user settings
         if user.enabled then
-            animations.FadeIn(barFrame)
+            if animations and animations.FadeIn then
+                animations.FadeIn(barFrame)
+            else
+                barFrame:Show()
+            end
         else
             animations.FadeOut(barFrame)
         end
