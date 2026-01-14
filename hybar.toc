@@ -15,6 +15,7 @@ locales/hybar-enUS.lua
 definitions.lua
 
 util/util.lua
+util/animations.lua
 
 conf/conf.lua
 conf/frame_conf.lua

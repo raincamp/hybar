@@ -18,4 +18,10 @@
 ---@field Checkbox fun(parent: frame, id: string, x: number, y: number, val: string): CheckButton
 ---@field Slider fun(parent: frame, id: string, x: number, y: number, width: number?, minVal: number, maxVal: number, step: number, label: string?): Slider
 ---@field Button fun(parent: frame, id: string, x: number, y: number, width: number?, height: number?, text: string?): Button
+
+
+---@class animations : table
+---@field FadeIn fun(frame: frame, duration: number?, onFinished: function?)
+---@field FadeOut fun(frame: frame, duration: number?, onFinished: function?)
+---@field StopFade fun(frame: frame)
 ]] --
