@@ -9,17 +9,35 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/raincamp/hybar)
 ![Last Commit](https://img.shields.io/github/last-commit/raincamp/hybar)
 
+![hybar banner](assets/hyb-banner.webp)
+
 **A dedicated 2-button action bar for "hell yeah brother" guild chat and yell communication in WoW Burning Crusade Classic Anniversary Edition.**
 
 ---
 
 ## Features
 
+### Core
 - **2-Button Action Bar**: Quick access to guild chat and yell macros
 - **Draggable Interface**: Position the bar anywhere on your screen
-- **Configurable Settings**: Enable/disable, lock position, toggle welcome message
-- **Lightweight**: Minimal performance impact
 - **TBC Classic Anniversary**: Built specifically for Burning Crusade Classic Anniversary Edition (Interface 20505)
+
+### Appearance & Customization
+- **Transparency Control**: Adjust bar opacity from 0-100%
+- **Scale Slider**: Resize the bar from 50% to 200%
+- **High-Contrast Mode**: Enhanced visibility option for accessibility
+- **Visual Feedback**: Fade animations, hover effects, unlock indicator
+
+### Configuration
+- **Expanded Settings Panel**: Organized sections for Behavior, Appearance, and Position
+- **Position Management**: Reset button and live position preview
+- **Sound Feedback**: Optional audio confirmation on button clicks
+- **Keyboard Navigation**: Full Tab/Arrow key support with focus indicators
+
+### Accessibility
+- **Combat Protection**: Safe handling during combat lockdown
+- **Tooltips**: Helpful descriptions for all controls
+- **Color-Coded Controls**: Visual priority indicators
 
 ---
 
@@ -45,11 +63,14 @@
 
 ### Slash Commands
 
-Open the configuration panel with any of these commands:
-
-- `/hellyeahbar`
-- `/hybar`
-- `/hyb`
+| Command | Description |
+|---------|-------------|
+| `/hybar` | Open configuration panel |
+| `/hellyeahbar` | Open configuration panel (alias) |
+| `/hyb` | Open configuration panel (alias) |
+| `/hybar reset` | Reset all settings to defaults |
+| `/hybar status` | Display current settings |
+| `/hybar help` | Show available commands |
 
 ### Action Bar Buttons
 
@@ -67,11 +88,22 @@ Open the configuration panel with any of these commands:
 
 ## Configuration
 
-The configuration panel provides the following options:
+The configuration panel (350x420px) is organized into sections:
 
+### Behavior
 - **Enable**: Show/hide the action bar
 - **Lock Position**: Prevent the bar from being moved
 - **Welcome Message**: Display a welcome message when logging in
+- **Sound Feedback**: Play sound on button clicks
+
+### Appearance
+- **Transparency**: Adjust bar opacity (0-100%)
+- **Scale**: Resize the bar (50-200%)
+- **High-Contrast Mode**: Enhanced visibility borders
+
+### Position
+- **Reset Position**: Return bar to default center location
+- **Position Preview**: Shows current anchor point and coordinates
 
 All settings are saved per character and persist across sessions.
 
