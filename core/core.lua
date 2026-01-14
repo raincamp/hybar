@@ -35,7 +35,11 @@ local function OnEvent(_, _, addOnName)
                 barFrame:Show()
             end
         else
-            animations.FadeOut(barFrame)
+            if animations and animations.FadeOut then
+                animations.FadeOut(barFrame)
+            else
+                barFrame:Hide()
+            end
         end
 
         -- Display welcome message if enabled
