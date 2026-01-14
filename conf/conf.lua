@@ -218,6 +218,52 @@ local function SetupConf()
 		FlashControl(self)
 	end
 
+	function conf.ResetAllSettings()
+		-- Reset all settings to defaults
+		for k, v in pairs(defaults) do
+			_hybar_user[k] = v
+		end
+
+		-- Apply visual changes immediately
+		local barFrame = _hyb.frames and _hyb.frames.bar
+		if barFrame then
+			-- Position
+			barFrame:ClearAllPoints()
+			barFrame:SetPoint(_hybar_user.point, UIParent, _hybar_user.rel_point, _hybar_user.x_offset, _hybar_user.y_offset)
+			-- Transparency
+			barFrame:SetAlpha(_hybar_user.transparency)
+			-- Scale
+			barFrame:SetScale(_hybar_user.scale)
+			-- Visibility
+			if _hybar_user.enabled then
+				barFrame:Show()
+			else
+				barFrame:Hide()
+			end
+		end
+
+		-- Apply high contrast
+		local bar = _hyb.bar
+		if bar and bar.ApplyHighContrast then
+			bar.ApplyHighContrast(_hybar_user.highContrast)
+		end
+
+		-- Show/hide unlock indicator
+		if bar then
+			if _hybar_user.locked then
+				bar.HideUnlockIndicator()
+			else
+				bar.ShowUnlockIndicator()
+			end
+		end
+
+		-- Update UI controls
+		conf.SetUser()
+
+		-- Show confirmation
+		util.SystemMsg(L["CMD_RESET_CONFIRM"])
+	end
+
 	return conf
 end
 
