@@ -229,3 +229,128 @@ end)
 
 -- Store config frame reference in namespace
 _hyb.frames.config = f
+
+-- ============================================================================
+-- KEYBOARD NAVIGATION
+-- ============================================================================
+
+-- Ordered list of focusable controls
+local focusableControls = {
+	cbEnabled,
+	cbLocked,
+	cbWelcome,
+	cbSound,
+	transparencySlider,
+	scaleSlider,
+	cbHighContrast,
+	resetPosButton,
+}
+
+local currentFocusIndex = 0
+
+-- Focus indicator texture (highlight around focused control)
+local focusIndicator = f:CreateTexture(nil, "OVERLAY")
+focusIndicator:SetColorTexture(0, 1, 1, 0.3) -- Cyan tint
+focusIndicator:Hide()
+
+-- Update focus indicator position
+local function UpdateFocusIndicator(control)
+	if not control then
+		focusIndicator:Hide()
+		return
+	end
+	focusIndicator:ClearAllPoints()
+	focusIndicator:SetPoint("TOPLEFT", control, "TOPLEFT", -4, 4)
+	focusIndicator:SetPoint("BOTTOMRIGHT", control, "BOTTOMRIGHT", 4, -4)
+	focusIndicator:Show()
+end
+
+-- Set focus to a control by index
+local function SetFocus(index)
+	if index < 1 then index = #focusableControls end
+	if index > #focusableControls then index = 1 end
+	currentFocusIndex = index
+	UpdateFocusIndicator(focusableControls[index])
+end
+
+-- Activate the currently focused control
+local function ActivateFocused()
+	local control = focusableControls[currentFocusIndex]
+	if not control then return end
+	
+	-- Check if it's a checkbox
+	if control.GetChecked then
+		control:Click()
+	-- Check if it's a button
+	elseif control:GetObjectType() == "Button" then
+		control:Click()
+	end
+end
+
+-- Adjust slider value with arrow keys
+local function AdjustSlider(direction)
+	local control = focusableControls[currentFocusIndex]
+	if not control then return end
+	
+	-- Only adjust if it's a slider
+	if control.GetValue and control.SetValue and control.GetMinMaxValues then
+		local minVal, maxVal = control:GetMinMaxValues()
+		local step = control:GetValueStep() or 0.01
+		local current = control:GetValue()
+		local newVal = current + (direction * step)
+		newVal = math.max(minVal, math.min(maxVal, newVal))
+		control:SetValue(newVal)
+	end
+end
+
+-- Enable keyboard input on the frame
+f:EnableKeyboard(true)
+f:SetPropagateKeyboardInput(true)
+
+f:SetScript("OnKeyDown", function(self, key)
+	-- Only handle keys when frame is visible
+	if not self:IsVisible() then return end
+	
+	if key == "TAB" then
+		self:SetPropagateKeyboardInput(false)
+		if IsShiftKeyDown() then
+			SetFocus(currentFocusIndex - 1)
+		else
+			SetFocus(currentFocusIndex + 1)
+		end
+	elseif key == "ENTER" or key == "SPACE" then
+		if currentFocusIndex > 0 then
+			self:SetPropagateKeyboardInput(false)
+			ActivateFocused()
+		else
+			self:SetPropagateKeyboardInput(true)
+		end
+	elseif key == "LEFT" or key == "DOWN" then
+		if currentFocusIndex > 0 then
+			self:SetPropagateKeyboardInput(false)
+			AdjustSlider(-1)
+		else
+			self:SetPropagateKeyboardInput(true)
+		end
+	elseif key == "RIGHT" or key == "UP" then
+		if currentFocusIndex > 0 then
+			self:SetPropagateKeyboardInput(false)
+			AdjustSlider(1)
+		else
+			self:SetPropagateKeyboardInput(true)
+		end
+	else
+		self:SetPropagateKeyboardInput(true)
+	end
+end)
+
+-- Clear focus when frame is hidden
+f:HookScript("OnHide", function()
+	currentFocusIndex = 0
+	focusIndicator:Hide()
+end)
+
+-- Initialize focus to first control when frame is shown
+f:HookScript("OnShow", function()
+	SetFocus(1)
+end)
