@@ -100,11 +100,12 @@ local function SetupConf()
 	function conf:EnabledCheckBoxOnClick()
 		_hybar_user.enabled = self:GetChecked()
 		local barFrame = _hyb.frames and _hyb.frames.bar
-		if barFrame then
+		local animations = _hyb.animations
+		if barFrame and animations then
 			if _hybar_user.enabled then
-				barFrame:Show()
+				animations.FadeIn(barFrame)
 			else
-				barFrame:Hide()
+				animations.FadeOut(barFrame)
 			end
 		end
 	end

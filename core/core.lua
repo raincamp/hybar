@@ -1,5 +1,5 @@
 local _, _hyb = ...
-local L, util, bar, conf = _hyb.locales, _hyb.util, _hyb.bar, _hyb.conf
+local L, util, bar, conf, animations = _hyb.locales, _hyb.util, _hyb.bar, _hyb.conf, _hyb.animations
 
 local load_message = { L["WELCOME_LINE_2"], L["WELCOME_LINE_3"] }
 
@@ -23,13 +23,23 @@ local function OnEvent(_, _, addOnName)
             return
         end
 
-        -- Show/hide and position the bar based on user settings
+        -- Position the bar based on user settings
+        barFrame:ClearAllPoints()
+        barFrame:SetPoint(user.point, UIParent, user.rel_point, user.x_offset, user.y_offset)
+
+        -- Show/hide with fade animation based on user settings
         if user.enabled then
-            barFrame:Show()
-            barFrame:ClearAllPoints()
-            barFrame:SetPoint(user.point, UIParent, user.rel_point, user.x_offset, user.y_offset)
+            if animations and animations.FadeIn then
+                animations.FadeIn(barFrame)
+            else
+                barFrame:Show()
+            end
         else
-            barFrame:Hide()
+            if animations and animations.FadeOut then
+                animations.FadeOut(barFrame)
+            else
+                barFrame:Hide()
+            end
         end
 
         -- Display welcome message if enabled
