@@ -112,6 +112,14 @@ local function SetupConf()
 
 	function conf:LockedCheckBoxOnClick()
 		_hybar_user.locked = self:GetChecked()
+		local bar = _hyb.bar
+		if bar then
+			if _hybar_user.locked then
+				bar.HideUnlockIndicator()
+			else
+				bar.ShowUnlockIndicator()
+			end
+		end
 	end
 
 	function conf:WelcomeCheckBoxOnClick()

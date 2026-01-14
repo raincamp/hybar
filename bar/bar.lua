@@ -111,6 +111,40 @@ if _hybar_user then
 	end
 end
 
+-- Create unlock indicator border (glowing border when unlocked)
+local unlockBorder = CreateFrame("Frame", nil, f, "BackdropTemplate")
+unlockBorder:SetPoint("TOPLEFT", f, "TOPLEFT", -3, 3)
+unlockBorder:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 3, -3)
+unlockBorder:SetBackdrop({
+	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	edgeSize = 12,
+})
+unlockBorder:SetBackdropBorderColor(1, 0.82, 0, 0.9) -- Gold color
+unlockBorder:SetFrameLevel(f:GetFrameLevel() + 1)
+unlockBorder:Hide()
+
+-- Pulse animation for unlock border
+local unlockPulse = unlockBorder:CreateAnimationGroup()
+unlockPulse:SetLooping("BOUNCE")
+local pulseAlpha = unlockPulse:CreateAnimation("Alpha")
+pulseAlpha:SetFromAlpha(0.5)
+pulseAlpha:SetToAlpha(1)
+pulseAlpha:SetDuration(0.8)
+pulseAlpha:SetSmoothing("IN_OUT")
+
+---Show the unlock indicator border with pulse animation
+function bar.ShowUnlockIndicator()
+	unlockBorder:Show()
+	unlockPulse:Play()
+end
+
+---Hide the unlock indicator border
+function bar.HideUnlockIndicator()
+	unlockPulse:Stop()
+	unlockBorder:Hide()
+end
+
 -- Store frame references in namespace for easy access
 _hyb.frames.bar = f
+_hyb.frames.unlockBorder = unlockBorder
 _hyb.bar = bar

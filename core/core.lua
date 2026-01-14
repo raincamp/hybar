@@ -34,6 +34,11 @@ local function OnEvent(_, _, addOnName)
             barFrame:Hide()
         end
 
+        -- Show unlock indicator if bar is unlocked
+        if not user.locked and bar then
+            bar.ShowUnlockIndicator()
+        end
+
         -- Display welcome message if enabled
         if user.welcomeMsg then
             util.SystemMsgEm()
