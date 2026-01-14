@@ -1,15 +1,15 @@
 # hybar
 
-![Version](https://img.shields.io/badge/version-1.0.2--alpha-blue)
+![Version](https://img.shields.io/badge/version-1.2.0--alpha-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![WoW](https://img.shields.io/badge/wow-Classic%20Era%201.15.1-orange)
-![Interface](https://img.shields.io/badge/interface-11501-yellow)
+![WoW](https://img.shields.io/badge/wow-TBC%20Classic%20Anniversary%202.5.5-orange)
+![Interface](https://img.shields.io/badge/interface-20505-yellow)
 [![CurseForge](https://img.shields.io/badge/CurseForge-980904-orange)](https://www.curseforge.com/wow/addons/hybar)
 ![Issues](https://img.shields.io/github/issues/raincamp/hybar)
 ![Pull Requests](https://img.shields.io/github/issues-pr/raincamp/hybar)
 ![Last Commit](https://img.shields.io/github/last-commit/raincamp/hybar)
 
-**A dedicated 2-button action bar for "hell yeah brother" guild chat and yell communication in WoW Classic Era.**
+**A dedicated 2-button action bar for "hell yeah brother" guild chat and yell communication in WoW Burning Crusade Classic Anniversary Edition.**
 
 ---
 
@@ -19,7 +19,7 @@
 - **Draggable Interface**: Position the bar anywhere on your screen
 - **Configurable Settings**: Enable/disable, lock position, toggle welcome message
 - **Lightweight**: Minimal performance impact
-- **Classic Era Optimized**: Built specifically for WoW Classic Era (Interface 11501)
+- **TBC Classic Anniversary**: Built specifically for Burning Crusade Classic Anniversary Edition (Interface 20505)
 
 ---
 
@@ -35,8 +35,8 @@
 
 1. Download the latest release from the [Releases page](https://github.com/raincamp/hybar/releases)
 2. Extract the `hybar` folder to your WoW addons directory:
-   - **Windows**: `C:\Program Files (x86)\World of Warcraft\_classic_era_\Interface\AddOns\`
-   - **macOS**: `/Applications/World of Warcraft/_classic_era_/Interface/AddOns/`
+   - **Windows**: `C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns\`
+   - **macOS**: `/Applications/World of Warcraft/_anniversary_/Interface/AddOns/`
 3. Restart WoW or type `/reload` if already in-game
 
 ---
@@ -118,10 +118,10 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ## Acknowledgments
 
-- Built for the World of Warcraft Classic Era community
+- Built for the World of Warcraft TBC Classic Anniversary community
 - Special thanks to all contributors and users who provide feedback
 - Inspired by the need for quick "hell yeah brother" communication
 
 ---
 
-**Made with ❤️ for the WoW Classic Era community**
+**Made with ❤️ for the WoW TBC Classic Anniversary community**

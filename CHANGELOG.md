@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0-alpha] - 2026-01-14
+
+### Changed
+- **Platform Migration**: Now targeting Burning Crusade Classic Anniversary Edition exclusively
+- Updated Interface version from 11501 (Classic Era 1.15.1) to 20505 (TBC Classic 2.5.5)
+- Updated installation paths from `_classic_era_` to `_anniversary_`
+
 ## [1.1.0-alpha] - 2026-01-14
 
 ### Added
@@ -80,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial development release
 - Basic addon structure and framework
 
-[Unreleased]: https://github.com/raincamp/hybar/compare/v1.1.0-alpha...HEAD
+[Unreleased]: https://github.com/raincamp/hybar/compare/v1.2.0-alpha...HEAD
+[1.2.0-alpha]: https://github.com/raincamp/hybar/compare/v1.1.0-alpha...v1.2.0-alpha
 [1.1.0-alpha]: https://github.com/raincamp/hybar/compare/v1.0.2-alpha...v1.1.0-alpha
 [1.0.2-alpha]: https://github.com/raincamp/hybar/compare/v1.0.1-alpha...v1.0.2-alpha
 [1.0.1-alpha]: https://github.com/raincamp/hybar/releases/tag/v1.0.1-alpha

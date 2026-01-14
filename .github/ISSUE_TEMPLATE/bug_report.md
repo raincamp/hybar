@@ -31,7 +31,7 @@ Paste Lua errors here if any
 ## Environment
 
 **WoW Version:**
-<!-- e.g., Classic Era 1.15.1 -->
+<!-- e.g., TBC Classic Anniversary 2.5.5 -->
 
 **hybar Version:**
 <!-- e.g., v1.0.2-alpha (check with /hyb or in addon list) -->

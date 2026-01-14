@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to **hybar**! We welcome contributions from the community, whether it's reporting bugs, suggesting features, improving documentation, or submitting code changes.
 
-This guide will help you get started with contributing to this World of Warcraft Classic Era addon project.
+This guide will help you get started with contributing to this World of Warcraft TBC Classic Anniversary addon project.
 
 ---
 
@@ -21,7 +21,7 @@ If you encounter a bug, please help us fix it by providing detailed information:
 1. **Check existing issues** to see if the bug has already been reported
 2. **Open a new issue** using the Bug Report template
 3. **Include the following information:**
-   - **WoW Version**: Classic Era version number (e.g., 1.15.1)
+   - **WoW Version**: TBC Classic Anniversary version (e.g., 2.5.5)
    - **Addon Version**: hybar version (found in `/hybar` config panel or .toc file)
    - **Other Addons**: List other addons you have installed (conflicts can occur)
    - **Steps to Reproduce**: Clear, numbered steps to recreate the bug
@@ -30,7 +30,7 @@ If you encounter a bug, please help us fix it by providing detailed information:
    - **Error Messages**: Lua errors (enable with `/console scriptErrors 1` in-game)
    - **Screenshots**: Visual evidence if applicable
 
-**Tip:** To capture Lua errors in WoW Classic Era, type `/console scriptErrors 1` in chat, then `/reload`. This will display error popups when they occur.
+**Tip:** To capture Lua errors in WoW TBC Classic Anniversary, type `/console scriptErrors 1` in chat, then `/reload`. This will display error popups when they occur.
 
 ---
 
@@ -56,7 +56,7 @@ We welcome pull requests! Here's how to contribute code changes:
 #### 1. Development Setup
 
 **Prerequisites:**
-- World of Warcraft Classic Era installed
+- World of Warcraft TBC Classic Anniversary installed
 - A text editor or IDE (VS Code, IntelliJ IDEA, etc.)
 - Git installed
 - Basic knowledge of Lua programming
@@ -69,13 +69,13 @@ We welcome pull requests! Here's how to contribute code changes:
    git clone https://github.com/YOUR_USERNAME/hybar.git
    ```
 3. **Create a symbolic link** from your WoW addons folder to your local repository:
-   - **Windows**: 
+   - **Windows**:
      ```cmd
-     mklink /D "C:\Program Files (x86)\World of Warcraft\_classic_era_\Interface\AddOns\hybar" "C:\path\to\your\hybar"
+     mklink /D "C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns\hybar" "C:\path\to\your\hybar"
      ```
    - **macOS/Linux**:
      ```bash
-     ln -s /path/to/your/hybar "/Applications/World of Warcraft/_classic_era_/Interface/AddOns/hybar"
+     ln -s /path/to/your/hybar "/Applications/World of Warcraft/_anniversary_/Interface/AddOns/hybar"
      ```
 
 #### 2. Development Workflow
@@ -90,7 +90,7 @@ We welcome pull requests! Here's how to contribute code changes:
    ```
 2. **Edit `.lua` files** directly in your text editor
 3. **Test in-game:**
-   - Launch WoW Classic Era
+   - Launch WoW TBC Classic Anniversary
    - Type `/reload` to reload the UI
    - Test your changes using `/hybar`, `/hellyeahbar`, or `/hyb`
 4. **Iterate** - edit code, `/reload`, test, repeat
@@ -244,4 +244,4 @@ If you have questions about contributing:
 
 ---
 
-Thank you for contributing to hybar and supporting the WoW Classic Era community!
+Thank you for contributing to hybar and supporting the WoW TBC Classic Anniversary community!

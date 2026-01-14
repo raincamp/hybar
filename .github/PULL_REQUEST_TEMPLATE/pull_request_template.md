@@ -39,7 +39,7 @@ Closes #
 - [ ] Tested with existing settings
 
 **WoW Version Tested:**
-<!-- e.g., Classic Era 1.15.1 -->
+<!-- e.g., TBC Classic Anniversary 2.5.5 -->
 
 **Test Steps Performed:**
 <!-- Describe specific scenarios you tested -->
