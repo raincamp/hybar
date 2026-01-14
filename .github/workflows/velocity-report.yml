@@ -46,7 +46,7 @@ jobs:
             });
 
             const milestoneData = milestone.data;
-            console.log(`Generating report for: ${milestoneData.title}`);
+            console.log('Generating report for: ' + milestoneData.title);
 
             // Fetch all issues for this milestone
             const issues = await github.rest.issues.listForRepo({
@@ -118,10 +118,10 @@ jobs:
               const hours = Math.floor(minutes / 60);
               const days = Math.floor(hours / 24);
 
-              if (days > 0) return `${days}d ${hours % 24}h`;
-              if (hours > 0) return `${hours}h ${minutes % 60}m`;
-              if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
-              return `${seconds}s`;
+              if (days > 0) return days + 'd ' + (hours % 24) + 'h';
+              if (hours > 0) return hours + 'h ' + (minutes % 60) + 'm';
+              if (minutes > 0) return minutes + 'm ' + (seconds % 60) + 's';
+              return seconds + 's';
             }
 
             function avgDuration(items) {
@@ -150,96 +150,98 @@ jobs:
 
             const today = new Date().toISOString().split('T')[0];
 
-            // Generate markdown report
-            const report = `# Velocity Report: Sprint ${sprintNumber}
-
-**Sprint**: ${milestoneData.title}
-**Report Period**: ${today}
-**Generated**: ${today} (Automated)
-
----
-
-## Executive Summary
-
-${milestoneData.description || 'Sprint completed successfully.'}
-
-| Metric | Value |
-|--------|-------|
-| Issues Planned | ${actualIssues.length} |
-| Issues Completed | ${completedIssues.length} |
-| PRs Merged | ${prTimes.length} |
-| Completion Rate | ${completionRate}% |
-| Velocity | ${completedIssues.length} issues/sprint |
-
----
-
-## Cycle Time (Issue Creation to Closure)
-
-| Issue | Title | Duration |
-|-------|-------|----------|
-${cycleTimes.map(i => `| #${i.number} | ${i.title.substring(0, 50)}${i.title.length > 50 ? '...' : ''} | ${i.durationStr} |`).join('\n')}
-
-**Average Cycle Time**: ${avgDuration(cycleTimes)}
-
----
-
-## Lead Time (PR Creation to Merge)
-
-| PR | Title | Created | Merged | Duration |
-|----|-------|---------|--------|----------|
-${prTimes.map(pr => `| #${pr.number} | ${pr.title.substring(0, 40)}${pr.title.length > 40 ? '...' : ''} | ${pr.created.substring(11, 19)} | ${pr.merged.substring(11, 19)} | ${pr.durationStr} |`).join('\n')}
-
-**Average Lead Time**: ${avgDuration(prTimes)}
-
----
-
-## Code Metrics
-
-### Lines Changed
-| Metric | Value |
-|--------|-------|
-| Total Additions | ${totalAdditions} |
-| Total Deletions | ${totalDeletions} |
-| Net Change | ${totalAdditions - totalDeletions >= 0 ? '+' : ''}${totalAdditions - totalDeletions} |
-
-### PR Breakdown
-| PR | Files | Additions | Deletions | Net |
-|----|-------|-----------|-----------|-----|
-${prTimes.map(pr => `| #${pr.number} | ${pr.changed_files} | ${pr.additions} | ${pr.deletions} | ${pr.additions - pr.deletions >= 0 ? '+' : ''}${pr.additions - pr.deletions} |`).join('\n')}
-
----
-
-## Work Distribution
-
-### By Priority
-| Priority | Count | Percentage |
-|----------|-------|------------|
-| High (P0) | ${priorityCounts['P0']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P0'] / actualIssues.length * 100) : 0}% |
-| Medium (P1) | ${priorityCounts['P1']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P1'] / actualIssues.length * 100) : 0}% |
-| Low (P2) | ${priorityCounts['P2']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P2'] / actualIssues.length * 100) : 0}% |
-
-### By Label
-| Label | Count |
-|-------|-------|
-${Object.entries(labelCounts).slice(0, 10).map(([name, count]) => `| ${name} | ${count} |`).join('\n')}
-
----
-
-## Related Links
-
-- [Sprint ${sprintNumber} Milestone](https://github.com/${context.repo.owner}/${context.repo.repo}/milestone/${milestoneNumber}?closed=1)
-- [Sprint ${sprintNumber} Issues](https://github.com/${context.repo.owner}/${context.repo.repo}/issues?q=milestone%3A"${encodeURIComponent(milestoneData.title)}")
-
----
-
-*Report generated automatically by GitHub Actions*
-`;
+            // Generate markdown report using array join to avoid YAML parsing issues
+            const reportLines = [
+              '# Velocity Report: Sprint ' + sprintNumber,
+              '',
+              '**Sprint**: ' + milestoneData.title,
+              '**Report Period**: ' + today,
+              '**Generated**: ' + today + ' (Automated)',
+              '',
+              '---',
+              '',
+              '## Executive Summary',
+              '',
+              milestoneData.description || 'Sprint completed successfully.',
+              '',
+              '| Metric | Value |',
+              '|--------|-------|',
+              '| Issues Planned | ' + actualIssues.length + ' |',
+              '| Issues Completed | ' + completedIssues.length + ' |',
+              '| PRs Merged | ' + prTimes.length + ' |',
+              '| Completion Rate | ' + completionRate + '% |',
+              '| Velocity | ' + completedIssues.length + ' issues/sprint |',
+              '',
+              '---',
+              '',
+              '## Cycle Time (Issue Creation to Closure)',
+              '',
+              '| Issue | Title | Duration |',
+              '|-------|-------|----------|',
+              ...cycleTimes.map(i => '| #' + i.number + ' | ' + i.title.substring(0, 50) + (i.title.length > 50 ? '...' : '') + ' | ' + i.durationStr + ' |'),
+              '',
+              '**Average Cycle Time**: ' + avgDuration(cycleTimes),
+              '',
+              '---',
+              '',
+              '## Lead Time (PR Creation to Merge)',
+              '',
+              '| PR | Title | Created | Merged | Duration |',
+              '|----|-------|---------|--------|----------|',
+              ...prTimes.map(pr => '| #' + pr.number + ' | ' + pr.title.substring(0, 40) + (pr.title.length > 40 ? '...' : '') + ' | ' + pr.created.substring(11, 19) + ' | ' + pr.merged.substring(11, 19) + ' | ' + pr.durationStr + ' |'),
+              '',
+              '**Average Lead Time**: ' + avgDuration(prTimes),
+              '',
+              '---',
+              '',
+              '## Code Metrics',
+              '',
+              '### Lines Changed',
+              '| Metric | Value |',
+              '|--------|-------|',
+              '| Total Additions | ' + totalAdditions + ' |',
+              '| Total Deletions | ' + totalDeletions + ' |',
+              '| Net Change | ' + (totalAdditions - totalDeletions >= 0 ? '+' : '') + (totalAdditions - totalDeletions) + ' |',
+              '',
+              '### PR Breakdown',
+              '| PR | Files | Additions | Deletions | Net |',
+              '|----|-------|-----------|-----------|-----|',
+              ...prTimes.map(pr => '| #' + pr.number + ' | ' + pr.changed_files + ' | ' + pr.additions + ' | ' + pr.deletions + ' | ' + (pr.additions - pr.deletions >= 0 ? '+' : '') + (pr.additions - pr.deletions) + ' |'),
+              '',
+              '---',
+              '',
+              '## Work Distribution',
+              '',
+              '### By Priority',
+              '| Priority | Count | Percentage |',
+              '|----------|-------|------------|',
+              '| High (P0) | ' + priorityCounts['P0'] + ' | ' + (actualIssues.length > 0 ? Math.round(priorityCounts['P0'] / actualIssues.length * 100) : 0) + '% |',
+              '| Medium (P1) | ' + priorityCounts['P1'] + ' | ' + (actualIssues.length > 0 ? Math.round(priorityCounts['P1'] / actualIssues.length * 100) : 0) + '% |',
+              '| Low (P2) | ' + priorityCounts['P2'] + ' | ' + (actualIssues.length > 0 ? Math.round(priorityCounts['P2'] / actualIssues.length * 100) : 0) + '% |',
+              '',
+              '### By Label',
+              '| Label | Count |',
+              '|-------|-------|',
+              ...Object.entries(labelCounts).slice(0, 10).map(([name, count]) => '| ' + name + ' | ' + count + ' |'),
+              '',
+              '---',
+              '',
+              '## Related Links',
+              '',
+              '- [Sprint ' + sprintNumber + ' Milestone](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/milestone/' + milestoneNumber + '?closed=1)',
+              '- [Sprint ' + sprintNumber + ' Issues](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/issues?q=milestone%3A"' + encodeURIComponent(milestoneData.title) + '")',
+              '',
+              '---',
+              '',
+              '*Report generated automatically by GitHub Actions*'
+            ];
+            const report = reportLines.join('\n');
 
             // Write report to wiki
-            const filename = `Velocity-Report-Sprint-${sprintNumber}.md`;
-            fs.writeFileSync(`wiki/${filename}`, report);
+            const filename = 'Velocity-Report-Sprint-' + sprintNumber + '.md';
+            fs.writeFileSync('wiki/' + filename, report);
 
-            console.log(`Report written to: ${filename}`);
+            console.log('Report written to: ' + filename);
             core.setOutput('filename', filename);
             core.setOutput('sprint_number', sprintNumber);
 
