@@ -105,6 +105,13 @@ local function SetupConf()
 		if scaleSlider then
 			scaleSlider:SetValue(_hybar_user.scale)
 		end
+
+		-- Update position text (deferred to allow config frame to initialize)
+		C_Timer.After(0.1, function()
+			if _hyb.UpdatePositionText then
+				_hyb.UpdatePositionText()
+			end
+		end)
 	end
 
 	function conf:EnabledCheckBoxOnClick()
@@ -181,6 +188,11 @@ local function SetupConf()
 
 		-- Show confirmation message
 		util.SystemMsg(L["RESET_POSITION_CONFIRM"])
+
+		-- Update position text in config panel
+		if _hyb.UpdatePositionText then
+			_hyb.UpdatePositionText()
+		end
 	end
 
 	return conf

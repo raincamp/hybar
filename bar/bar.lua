@@ -139,6 +139,11 @@ local OnFrameDragStop = function()
 	_hybar_user.rel_point = rel_point
 	_hybar_user.x_offset = _hyb.util.SimpleRound(x_offset, 1)
 	_hybar_user.y_offset = _hyb.util.SimpleRound(y_offset, 1)
+
+	-- Update position text in config panel
+	if _hyb.UpdatePositionText then
+		_hyb.UpdatePositionText()
+	end
 end
 
 

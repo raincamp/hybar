@@ -162,8 +162,30 @@ scaleSlider:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
+-- position preview text
+local positionLabel = util.Text(optionsFrame, L["POSITION_LABEL"], "SystemFont_Small")
+positionLabel:SetPoint("TOPLEFT", optionsFrame, "TOPLEFT", 0, -padding * 18 - 10)
+
+local positionText = util.Text(optionsFrame, "", "SystemFont_Small")
+positionText:SetPoint("LEFT", positionLabel, "RIGHT", 4, 0)
+positionText:SetTextColor(0.7, 0.7, 0.7)
+
+-- Function to update position display
+local function UpdatePositionText()
+	if _hybar_user then
+		local pos = string.format("%s (%d, %d)",
+			_hybar_user.point or "CENTER",
+			_hybar_user.x_offset or 0,
+			_hybar_user.y_offset or 0)
+		positionText:SetText(pos)
+	end
+end
+
+-- Store update function in namespace for bar.lua to call
+_hyb.UpdatePositionText = UpdatePositionText
+
 -- reset position button
-local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 18 - 10, 150, 22,
+local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 20 - 10, 150, 22,
 	L["RESET_POSITION_BUTTON"])
 
 resetPosButton.tooltip = L["RESET_POSITION_BUTTON_TOOLTIP"]
