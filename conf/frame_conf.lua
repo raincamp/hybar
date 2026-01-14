@@ -63,8 +63,15 @@ optionsText:SetPoint("TOPLEFT", optionsFrame)
 
 -- options
 
--- enabled
+-- Color hierarchy for checkbox labels
+-- Critical (Gold): Enable - most important, controls bar visibility
+-- Medium (White): Lock, Sound, High Contrast - important settings
+-- Low (Gray): Welcome Message - convenience feature
+
+-- enabled (Critical - Gold)
 local cbEnabled = util.Checkbox(optionsFrame, "ENABLED", 0, -padding - 6, L["USER_ENABLED"])
+local cbEnabledText = _G[cbEnabled:GetName() .. "Text"]
+if cbEnabledText then cbEnabledText:SetTextColor(1, 0.82, 0) end -- Gold
 
 cbEnabled.tooltip = L["USER_ENABLED_TOOLTIP"]
 cbEnabled:SetScript("OnClick", conf.EnabledCheckBoxOnClick)
@@ -77,8 +84,9 @@ cbEnabled:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
--- locked
+-- locked (Medium - White, default)
 local cbLocked = util.Checkbox(optionsFrame, "LOCKED", 0, -padding * 3 - 6, L["USER_LOCKED"])
+-- White is default, no color change needed
 
 cbLocked.tooltip = L["USER_LOCKED_TOOLTIP"]
 cbLocked:SetScript("OnClick", conf.LockedCheckBoxOnClick)
@@ -91,8 +99,10 @@ cbLocked:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
--- welcomeMsg
+-- welcomeMsg (Low - Gray)
 local cbWelcome = util.Checkbox(optionsFrame, "WELCOME_MSG", 0, -padding * 5 - 6, L["USER_WELCOME_MSG"])
+local cbWelcomeText = _G[cbWelcome:GetName() .. "Text"]
+if cbWelcomeText then cbWelcomeText:SetTextColor(0.7, 0.7, 0.7) end -- Gray
 
 cbWelcome.tooltip = L["USER_WELCOME_MSG_TOOLTIP"]
 cbWelcome:SetScript("OnClick", conf.WelcomeCheckBoxOnClick)
@@ -105,8 +115,9 @@ cbWelcome:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
--- sound enabled
+-- sound enabled (Medium - White, default)
 local cbSound = util.Checkbox(optionsFrame, "SOUND_ENABLED", 0, -padding * 7 - 6, L["USER_SOUND_ENABLED"])
+-- White is default, no color change needed
 
 cbSound.tooltip = L["USER_SOUND_ENABLED_TOOLTIP"]
 cbSound:SetScript("OnClick", conf.SoundEnabledCheckBoxOnClick)
@@ -119,8 +130,9 @@ cbSound:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
--- high contrast
+-- high contrast (Medium - White, default)
 local cbHighContrast = util.Checkbox(optionsFrame, "HIGH_CONTRAST", 0, -padding * 9 - 6, L["USER_HIGH_CONTRAST"])
+-- White is default, no color change needed
 
 cbHighContrast.tooltip = L["USER_HIGH_CONTRAST_TOOLTIP"]
 cbHighContrast:SetScript("OnClick", conf.HighContrastCheckBoxOnClick)
