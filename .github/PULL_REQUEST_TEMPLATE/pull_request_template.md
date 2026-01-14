@@ -11,10 +11,21 @@
 - [ ] Code refactoring
 - [ ] Performance improvement
 
+## Sprint Context
+<!-- Required: Link to the sprint milestone this PR belongs to -->
+
+**Sprint Milestone**: <!-- e.g., Sprint 4: Commands & Feedback -->
+
 ## Related Issues
 <!-- Link related issues using keywords: Closes #123, Fixes #456, Related to #789 -->
 
 Closes #
+
+## Dependency Check
+<!-- If this PR depends on another PR being merged first, list it here -->
+
+- [ ] No dependencies on other PRs
+- [ ] Depends on PR: #
 
 ## Testing
 
@@ -29,6 +40,12 @@ Closes #
 
 **WoW Version Tested:**
 <!-- e.g., Classic Era 1.15.1 -->
+
+**Test Steps Performed:**
+<!-- Describe specific scenarios you tested -->
+1.
+2.
+3.
 
 ### Screenshots / GIFs
 <!-- If applicable, add screenshots or GIFs demonstrating the changes -->
@@ -49,6 +66,14 @@ Closes #
 ### Testing
 - [ ] Changes have been tested in-game
 - [ ] No conflicts with other addons (tested with common addons if possible)
+
+## Merge Readiness
+<!-- For maintainers - check before merging -->
+
+- [ ] Branch is up-to-date with main (rebase if needed)
+- [ ] All conversations resolved
+- [ ] CI checks passing
+- [ ] Manual testing verified
 
 ## Additional Notes
 <!-- Add any additional context, concerns, or notes for reviewers -->

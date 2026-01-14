@@ -1,0 +1,104 @@
+name: Sprint Task
+description: A planned task for an upcoming sprint
+title: "[TASK] "
+labels: ["type: task"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Sprint Task
+        Use this template for planned sprint work items. For bugs or feature requests from users, use the appropriate template instead.
+
+  - type: dropdown
+    id: sprint
+    attributes:
+      label: Target Sprint
+      description: Which sprint is this task planned for?
+      options:
+        - "Sprint 4: Commands & Feedback"
+        - "Sprint 5: Accessibility & Polish"
+        - "Phase 3 Backlog"
+        - "Phase 4 Backlog"
+        - "Unplanned / Backlog"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this task?
+      options:
+        - "P0 - Critical (must complete this sprint)"
+        - "P1 - High (should complete this sprint)"
+        - "P2 - Medium (nice to have)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What area does this task affect?
+      options:
+        - "UI / Visual"
+        - "Configuration"
+        - "Commands / Slash"
+        - "Accessibility"
+        - "Performance"
+        - "Documentation"
+        - "Refactoring"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: Describe what needs to be done
+      placeholder: |
+        Implement the /hybar reset command that resets the bar position to default CENTER location.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How do we know this task is complete?
+      placeholder: |
+        - [ ] Command `/hybar reset` resets bar to CENTER
+        - [ ] Position is saved to SavedVariables
+        - [ ] Print confirmation message to chat
+        - [ ] Works during combat lockdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical
+    attributes:
+      label: Technical Notes
+      description: Any technical details, files affected, or implementation hints
+      placeholder: |
+        Files: functions/slash.lua, locales/hybar-enUS.lua
+        Pattern: Use existing slash command handler pattern
+        API: SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Does this task depend on other issues being completed first?
+      placeholder: |
+        Depends on #53 (slash command infrastructure)
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-Implementation Checklist
+      options:
+        - label: I have checked that this task is not a duplicate
+        - label: I have reviewed the Phase Plan for context
+        - label: I understand the WoW API constraints (if applicable)

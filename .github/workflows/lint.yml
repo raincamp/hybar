@@ -1,0 +1,47 @@
+name: Lua Check
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - '**.lua'
+  push:
+    branches: [main, master]
+    paths:
+      - '**.lua'
+
+jobs:
+  luacheck:
+    name: Lua Syntax & Style Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Lua and Luacheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.1 luarocks
+          sudo luarocks install luacheck
+
+      - name: Run Luacheck
+        run: |
+          # Use .luacheckrc if present, otherwise use inline config
+          if [ -f .luacheckrc ]; then
+            echo "Using .luacheckrc configuration"
+            luacheck . --codes
+          else
+            echo "Using inline configuration"
+            luacheck . \
+              --std lua51 \
+              --globals _G _hyb SLASH_HYBAR1 SLASH_HYBAR2 SLASH_HYBAR3 \
+              --globals CreateFrame UIParent GameFontNormal GameFontHighlight \
+              --globals PlaySound SOUNDKIT BackdropTemplateMixin \
+              --globals SlashCmdList DEFAULT_CHAT_FRAME \
+              --read-globals string table math pairs ipairs type tostring tonumber \
+              --exclude-files definitions.lua \
+              --no-unused-args \
+              --no-max-line-length \
+              --codes
+          fi

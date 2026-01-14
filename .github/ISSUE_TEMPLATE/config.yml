@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/raincamp/hybar/discussions
+    about: Ask questions or start a discussion. Please use Issues only for bugs and feature requests.
+
+  - name: WoW Addon Development Help
+    url: https://discord.gg/addon-development
+    about: General WoW addon development questions (not hybar-specific)

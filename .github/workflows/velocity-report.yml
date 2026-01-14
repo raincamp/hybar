@@ -1,0 +1,253 @@
+name: Generate Velocity Report
+
+on:
+  milestone:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      milestone_number:
+        description: 'Milestone number to generate report for'
+        required: true
+        type: number
+
+jobs:
+  generate-report:
+    name: Generate Sprint Velocity Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: wiki
+
+      - name: Generate velocity report
+        uses: actions/github-script@v7
+        id: report
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Get milestone number from event or input
+            let milestoneNumber;
+            if (context.eventName === 'milestone') {
+              milestoneNumber = context.payload.milestone.number;
+            } else {
+              milestoneNumber = parseInt('${{ inputs.milestone_number }}');
+            }
+
+            // Fetch milestone details
+            const milestone = await github.rest.issues.getMilestone({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone_number: milestoneNumber
+            });
+
+            const milestoneData = milestone.data;
+            console.log(`Generating report for: ${milestoneData.title}`);
+
+            // Fetch all issues for this milestone
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone: milestoneNumber,
+              state: 'all',
+              per_page: 100
+            });
+
+            // Fetch all PRs (issues with pull_request property)
+            const allIssues = issues.data;
+            const prs = allIssues.filter(i => i.pull_request);
+            const actualIssues = allIssues.filter(i => !i.pull_request);
+
+            // Calculate metrics
+            const completedIssues = actualIssues.filter(i => i.state === 'closed');
+            const completionRate = actualIssues.length > 0
+              ? Math.round((completedIssues.length / actualIssues.length) * 100)
+              : 0;
+
+            // Extract sprint number from milestone title (e.g., "Sprint 3: Advanced Config UI")
+            const sprintMatch = milestoneData.title.match(/Sprint\s*(\d+)/i);
+            const sprintNumber = sprintMatch ? sprintMatch[1] : 'N';
+
+            // Calculate cycle times
+            const cycleTimes = completedIssues.map(issue => {
+              const created = new Date(issue.created_at);
+              const closed = new Date(issue.closed_at);
+              return {
+                number: issue.number,
+                title: issue.title,
+                duration: closed - created,
+                durationStr: formatDuration(closed - created)
+              };
+            });
+
+            // Calculate PR lead times
+            const prTimes = [];
+            for (const pr of prs) {
+              if (pr.state === 'closed') {
+                // Fetch PR details to get merged_at
+                const prDetail = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number
+                });
+                if (prDetail.data.merged_at) {
+                  const created = new Date(pr.created_at);
+                  const merged = new Date(prDetail.data.merged_at);
+                  prTimes.push({
+                    number: pr.number,
+                    title: pr.title,
+                    created: pr.created_at,
+                    merged: prDetail.data.merged_at,
+                    duration: merged - created,
+                    durationStr: formatDuration(merged - created),
+                    additions: prDetail.data.additions,
+                    deletions: prDetail.data.deletions,
+                    changed_files: prDetail.data.changed_files
+                  });
+                }
+              }
+            }
+
+            function formatDuration(ms) {
+              const seconds = Math.floor(ms / 1000);
+              const minutes = Math.floor(seconds / 60);
+              const hours = Math.floor(minutes / 60);
+              const days = Math.floor(hours / 24);
+
+              if (days > 0) return `${days}d ${hours % 24}h`;
+              if (hours > 0) return `${hours}h ${minutes % 60}m`;
+              if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+              return `${seconds}s`;
+            }
+
+            function avgDuration(items) {
+              if (items.length === 0) return 'N/A';
+              const avg = items.reduce((sum, i) => sum + i.duration, 0) / items.length;
+              return formatDuration(avg);
+            }
+
+            // Calculate totals
+            const totalAdditions = prTimes.reduce((sum, pr) => sum + (pr.additions || 0), 0);
+            const totalDeletions = prTimes.reduce((sum, pr) => sum + (pr.deletions || 0), 0);
+            const totalFiles = [...new Set(prTimes.flatMap(pr => pr.changed_files || 0))].length || prTimes.reduce((sum, pr) => sum + (pr.changed_files || 0), 0);
+
+            // Count labels
+            const labelCounts = {};
+            const priorityCounts = { 'P0': 0, 'P1': 0, 'P2': 0 };
+            for (const issue of actualIssues) {
+              for (const label of issue.labels) {
+                const name = typeof label === 'string' ? label : label.name;
+                labelCounts[name] = (labelCounts[name] || 0) + 1;
+                if (name.includes('P0')) priorityCounts['P0']++;
+                if (name.includes('P1')) priorityCounts['P1']++;
+                if (name.includes('P2')) priorityCounts['P2']++;
+              }
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+
+            // Generate markdown report
+            const report = `# Velocity Report: Sprint ${sprintNumber}
+
+**Sprint**: ${milestoneData.title}
+**Report Period**: ${today}
+**Generated**: ${today} (Automated)
+
+---
+
+## Executive Summary
+
+${milestoneData.description || 'Sprint completed successfully.'}
+
+| Metric | Value |
+|--------|-------|
+| Issues Planned | ${actualIssues.length} |
+| Issues Completed | ${completedIssues.length} |
+| PRs Merged | ${prTimes.length} |
+| Completion Rate | ${completionRate}% |
+| Velocity | ${completedIssues.length} issues/sprint |
+
+---
+
+## Cycle Time (Issue Creation to Closure)
+
+| Issue | Title | Duration |
+|-------|-------|----------|
+${cycleTimes.map(i => `| #${i.number} | ${i.title.substring(0, 50)}${i.title.length > 50 ? '...' : ''} | ${i.durationStr} |`).join('\n')}
+
+**Average Cycle Time**: ${avgDuration(cycleTimes)}
+
+---
+
+## Lead Time (PR Creation to Merge)
+
+| PR | Title | Created | Merged | Duration |
+|----|-------|---------|--------|----------|
+${prTimes.map(pr => `| #${pr.number} | ${pr.title.substring(0, 40)}${pr.title.length > 40 ? '...' : ''} | ${pr.created.substring(11, 19)} | ${pr.merged.substring(11, 19)} | ${pr.durationStr} |`).join('\n')}
+
+**Average Lead Time**: ${avgDuration(prTimes)}
+
+---
+
+## Code Metrics
+
+### Lines Changed
+| Metric | Value |
+|--------|-------|
+| Total Additions | ${totalAdditions} |
+| Total Deletions | ${totalDeletions} |
+| Net Change | ${totalAdditions - totalDeletions >= 0 ? '+' : ''}${totalAdditions - totalDeletions} |
+
+### PR Breakdown
+| PR | Files | Additions | Deletions | Net |
+|----|-------|-----------|-----------|-----|
+${prTimes.map(pr => `| #${pr.number} | ${pr.changed_files} | ${pr.additions} | ${pr.deletions} | ${pr.additions - pr.deletions >= 0 ? '+' : ''}${pr.additions - pr.deletions} |`).join('\n')}
+
+---
+
+## Work Distribution
+
+### By Priority
+| Priority | Count | Percentage |
+|----------|-------|------------|
+| High (P0) | ${priorityCounts['P0']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P0'] / actualIssues.length * 100) : 0}% |
+| Medium (P1) | ${priorityCounts['P1']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P1'] / actualIssues.length * 100) : 0}% |
+| Low (P2) | ${priorityCounts['P2']} | ${actualIssues.length > 0 ? Math.round(priorityCounts['P2'] / actualIssues.length * 100) : 0}% |
+
+### By Label
+| Label | Count |
+|-------|-------|
+${Object.entries(labelCounts).slice(0, 10).map(([name, count]) => `| ${name} | ${count} |`).join('\n')}
+
+---
+
+## Related Links
+
+- [Sprint ${sprintNumber} Milestone](https://github.com/${context.repo.owner}/${context.repo.repo}/milestone/${milestoneNumber}?closed=1)
+- [Sprint ${sprintNumber} Issues](https://github.com/${context.repo.owner}/${context.repo.repo}/issues?q=milestone%3A"${encodeURIComponent(milestoneData.title)}")
+
+---
+
+*Report generated automatically by GitHub Actions*
+`;
+
+            // Write report to wiki
+            const filename = `Velocity-Report-Sprint-${sprintNumber}.md`;
+            fs.writeFileSync(`wiki/${filename}`, report);
+
+            console.log(`Report written to: ${filename}`);
+            core.setOutput('filename', filename);
+            core.setOutput('sprint_number', sprintNumber);
+
+      - name: Commit and push wiki changes
+        working-directory: wiki
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "docs: auto-generate velocity report for Sprint ${{ steps.report.outputs.sprint_number }}"
+          git push

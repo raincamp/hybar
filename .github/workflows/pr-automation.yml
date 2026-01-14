@@ -1,0 +1,142 @@
+name: PR Automation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  link-issues:
+    name: Link Issues and Add Labels
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for linked issues and add labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            const prTitle = context.payload.pull_request.title || '';
+
+            // Find issue references in body (Closes #N, Fixes #N, Refs #N)
+            const issuePattern = /(?:closes?|fixes?|resolves?|refs?)\s*#(\d+)/gi;
+            const matches = [...prBody.matchAll(issuePattern), ...prTitle.matchAll(issuePattern)];
+            const issueNumbers = [...new Set(matches.map(m => parseInt(m[1])))];
+
+            console.log(`Found linked issues: ${issueNumbers.join(', ') || 'none'}`);
+
+            const labelsToAdd = [];
+
+            if (issueNumbers.length > 0) {
+              labelsToAdd.push('has-linked-issue');
+
+              // Copy labels from linked issues to PR
+              for (const issueNumber of issueNumbers) {
+                try {
+                  const issue = await github.rest.issues.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issueNumber
+                  });
+
+                  // Copy sprint and phase labels
+                  const copyLabels = ['sprint-', 'phase-', 'priority:'];
+                  for (const label of issue.data.labels) {
+                    const labelName = typeof label === 'string' ? label : label.name;
+                    if (copyLabels.some(prefix => labelName.startsWith(prefix))) {
+                      if (!labelsToAdd.includes(labelName)) {
+                        labelsToAdd.push(labelName);
+                        console.log(`Copying label from #${issueNumber}: ${labelName}`);
+                      }
+                    }
+                  }
+                } catch (error) {
+                  console.log(`Could not fetch issue #${issueNumber}: ${error.message}`);
+                }
+              }
+            }
+
+            // Detect PR type from title prefix
+            const titleLower = prTitle.toLowerCase();
+            if (titleLower.startsWith('feat')) {
+              labelsToAdd.push('type: enhancement');
+            } else if (titleLower.startsWith('fix')) {
+              labelsToAdd.push('type: bug');
+            } else if (titleLower.startsWith('docs')) {
+              labelsToAdd.push('type: documentation');
+            } else if (titleLower.startsWith('refactor')) {
+              labelsToAdd.push('type: refactor');
+            } else if (titleLower.startsWith('perf')) {
+              labelsToAdd.push('type: performance');
+            }
+
+            // Add labels if any
+            if (labelsToAdd.length > 0) {
+              console.log(`Adding labels: ${labelsToAdd.join(', ')}`);
+
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  labels: labelsToAdd
+                });
+              } catch (error) {
+                console.log(`Could not add labels: ${error.message}`);
+              }
+            }
+
+  size-label:
+    name: Add Size Label
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Label PR by size
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const additions = pr.additions || 0;
+            const deletions = pr.deletions || 0;
+            const totalChanges = additions + deletions;
+
+            let sizeLabel = 'size: S';
+            if (totalChanges > 500) {
+              sizeLabel = 'size: XL';
+            } else if (totalChanges > 250) {
+              sizeLabel = 'size: L';
+            } else if (totalChanges > 100) {
+              sizeLabel = 'size: M';
+            }
+
+            console.log(`PR has ${totalChanges} changes, labeling as ${sizeLabel}`);
+
+            // Remove existing size labels first
+            const existingLabels = pr.labels.map(l => l.name);
+            const sizeLabels = existingLabels.filter(l => l.startsWith('size:'));
+
+            for (const label of sizeLabels) {
+              if (label !== sizeLabel) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    name: label
+                  });
+                } catch (error) {
+                  // Label might not exist, ignore
+                }
+              }
+            }
+
+            // Add new size label
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: [sizeLabel]
+              });
+            } catch (error) {
+              console.log(`Could not add size label: ${error.message}`);
+            }

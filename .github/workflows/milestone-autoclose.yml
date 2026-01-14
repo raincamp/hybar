@@ -1,0 +1,54 @@
+name: Auto-close Milestone
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  check-milestone:
+    name: Check and Close Empty Milestone
+    runs-on: ubuntu-latest
+    if: github.event.issue.milestone != null
+
+    steps:
+      - name: Check milestone completion
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const milestone = context.payload.issue.milestone;
+
+            console.log(`Checking milestone: ${milestone.title} (#${milestone.number})`);
+
+            // Get all open issues for this milestone
+            const openIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone: milestone.number,
+              state: 'open'
+            });
+
+            console.log(`Open issues remaining: ${openIssues.data.length}`);
+
+            // If no open issues remain, close the milestone
+            if (openIssues.data.length === 0) {
+              console.log(`All issues closed. Closing milestone: ${milestone.title}`);
+
+              await github.rest.issues.updateMilestone({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                milestone_number: milestone.number,
+                state: 'closed'
+              });
+
+              console.log(`Milestone ${milestone.title} has been closed.`);
+
+              // Create a comment on the last closed issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: `🎉 This was the last issue in **${milestone.title}**! The milestone has been automatically closed.\n\nSee the [milestone summary](https://github.com/${context.repo.owner}/${context.repo.repo}/milestone/${milestone.number}?closed=1) for details.`
+              });
+            } else {
+              console.log(`${openIssues.data.length} issues still open. Milestone remains active.`);
+            }

@@ -1,0 +1,167 @@
+# Phase Labels
+- name: "phase-1"
+  color: "0E8A16"
+  description: "Phase 1: Critical Stability"
+
+- name: "phase-2"
+  color: "1D76DB"
+  description: "Phase 2: Enhanced UX"
+
+- name: "phase-3"
+  color: "D93F0B"
+  description: "Phase 3: Feature Expansion"
+
+- name: "phase-4"
+  color: "5319E7"
+  description: "Phase 4: Advanced Features"
+
+- name: "phase-5"
+  color: "006B75"
+  description: "Phase 5: Testing & Optimization"
+
+- name: "phase-6"
+  color: "B60205"
+  description: "Phase 6: Release & Maintenance"
+
+# Sprint Labels
+- name: "sprint-1"
+  color: "BFD4F2"
+  description: "Sprint 1: Foundation & Quick Wins"
+
+- name: "sprint-2"
+  color: "BFD4F2"
+  description: "Sprint 2: Visual Polish"
+
+- name: "sprint-3"
+  color: "BFD4F2"
+  description: "Sprint 3: Advanced Config UI"
+
+- name: "sprint-4"
+  color: "BFD4F2"
+  description: "Sprint 4: Commands & Feedback"
+
+- name: "sprint-5"
+  color: "BFD4F2"
+  description: "Sprint 5: Accessibility & Polish"
+
+# Priority Labels
+- name: "priority: P0"
+  color: "B60205"
+  description: "Critical - Must fix immediately"
+
+- name: "priority: P1"
+  color: "FBCA04"
+  description: "High - Should fix this sprint"
+
+- name: "priority: P2"
+  color: "0E8A16"
+  description: "Medium - Nice to have"
+
+# Type Labels
+- name: "type: bug"
+  color: "D73A4A"
+  description: "Something isn't working"
+
+- name: "type: enhancement"
+  color: "A2EEEF"
+  description: "New feature or request"
+
+- name: "type: task"
+  color: "C5DEF5"
+  description: "Sprint task or work item"
+
+- name: "type: documentation"
+  color: "0075CA"
+  description: "Documentation improvements"
+
+- name: "type: refactor"
+  color: "D4C5F9"
+  description: "Code refactoring"
+
+- name: "type: performance"
+  color: "F9D0C4"
+  description: "Performance improvements"
+
+# Category Labels
+- name: "ui"
+  color: "7057FF"
+  description: "User interface changes"
+
+- name: "accessibility"
+  color: "008672"
+  description: "Accessibility improvements"
+
+- name: "animation"
+  color: "FBCA04"
+  description: "Animation related"
+
+- name: "audio"
+  color: "E99695"
+  description: "Sound/audio related"
+
+- name: "config"
+  color: "C2E0C6"
+  description: "Configuration panel related"
+
+- name: "commands"
+  color: "FEF2C0"
+  description: "Slash commands related"
+
+- name: "localization"
+  color: "BFDADC"
+  description: "Localization/i18n"
+
+# Status Labels
+- name: "status: blocked"
+  color: "D93F0B"
+  description: "Blocked by another issue or external factor"
+
+- name: "status: needs-review"
+  color: "FBCA04"
+  description: "Awaiting code review"
+
+- name: "status: in-progress"
+  color: "0E8A16"
+  description: "Currently being worked on"
+
+# Special Labels
+- name: "good first issue"
+  color: "7057FF"
+  description: "Good for newcomers"
+
+- name: "help wanted"
+  color: "008672"
+  description: "Extra attention is needed"
+
+- name: "has-linked-issue"
+  color: "C5DEF5"
+  description: "PR has a linked issue"
+
+- name: "breaking-change"
+  color: "B60205"
+  description: "Introduces breaking changes"
+
+- name: "wontfix"
+  color: "FFFFFF"
+  description: "This will not be worked on"
+
+- name: "duplicate"
+  color: "CFD3D7"
+  description: "This issue or PR already exists"
+
+# Size Labels (auto-applied by PR automation)
+- name: "size: S"
+  color: "C2E0C6"
+  description: "Small PR (<100 lines)"
+
+- name: "size: M"
+  color: "FEF2C0"
+  description: "Medium PR (100-250 lines)"
+
+- name: "size: L"
+  color: "F9D0C4"
+  description: "Large PR (250-500 lines)"
+
+- name: "size: XL"
+  color: "E99695"
+  description: "Extra large PR (>500 lines)"
