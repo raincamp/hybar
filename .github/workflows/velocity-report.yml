@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}.wiki
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WIKI_TOKEN }}
           path: wiki
 
       - name: Generate velocity report
