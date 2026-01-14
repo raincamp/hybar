@@ -59,6 +59,11 @@ for i = 1, NUM_BUTTONS do
 	highlight:SetAllPoints(button)
 	highlight:SetColorTexture(1, 1, 1, 0.3)
 
+	-- Play sound on click (PostClick fires after secure action)
+	button:SetScript("PostClick", function()
+		util.PlayButtonSound()
+	end)
+
 	buttons[i] = button
 end
 
