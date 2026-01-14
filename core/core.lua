@@ -31,7 +31,7 @@ local function OnEvent(_, _, addOnName)
         if user.enabled then
             animations.FadeIn(barFrame)
         else
-            barFrame:Hide()
+            animations.FadeOut(barFrame)
         end
 
         -- Display welcome message if enabled
