@@ -59,6 +59,32 @@ for i = 1, NUM_BUTTONS do
 	highlight:SetAllPoints(button)
 	highlight:SetColorTexture(1, 1, 1, 0.3)
 
+	-- Create glow border for enhanced hover effect
+	local glow = button:CreateTexture(nil, "OVERLAY")
+	glow:SetPoint("TOPLEFT", button, "TOPLEFT", -2, 2)
+	glow:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 2, -2)
+	glow:SetColorTexture(0, 1, 1, 0)
+	glow:SetBlendMode("ADD")
+	button.glow = glow
+
+	-- Store original OnEnter/OnLeave and wrap with hover effects
+	local originalOnEnter = button:GetScript("OnEnter")
+	local originalOnLeave = button:GetScript("OnLeave")
+
+	button:SetScript("OnEnter", function(self)
+		-- Show glow effect
+		self.glow:SetColorTexture(0, 1, 1, 0.4)
+		-- Call original tooltip handler
+		if originalOnEnter then originalOnEnter(self) end
+	end)
+
+	button:SetScript("OnLeave", function(self)
+		-- Hide glow effect
+		self.glow:SetColorTexture(0, 1, 1, 0)
+		-- Call original tooltip handler
+		if originalOnLeave then originalOnLeave(self) end
+	end)
+
 	-- Play sound on click (PostClick fires after secure action)
 	button:SetScript("PostClick", function()
 		util.PlayButtonSound()
