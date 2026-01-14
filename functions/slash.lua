@@ -21,6 +21,15 @@ local function PrintStatus()
     util.SystemMsg(L["VERSION"])
 end
 
+-- Print help message with available commands
+local function PrintHelp()
+    util.SystemMsg(L["CMD_HELP_HEADER"])
+    util.SystemMsg(L["CMD_HELP_CONFIG"])
+    util.SystemMsg(L["CMD_HELP_RESET"])
+    util.SystemMsg(L["CMD_HELP_STATUS"])
+    util.SystemMsg(L["CMD_HELP_HELP"])
+end
+
 -- slash cmds
 SLASH_HYB_CONFIG1 = "/hellyeahbar"
 SLASH_HYB_CONFIG2 = "/hybar"
@@ -36,6 +45,9 @@ SlashCmdList["HYB_CONFIG"] = function(msg)
     elseif cmd == "status" then
         -- Display current settings
         PrintStatus()
+    elseif cmd == "help" then
+        -- Display available commands
+        PrintHelp()
     elseif cmd == "" then
         -- Toggle config panel
         local configFrame = _hyb.frames and _hyb.frames.config
@@ -49,14 +61,8 @@ SlashCmdList["HYB_CONFIG"] = function(msg)
             print("Error: hybar config frame not initialized")
         end
     else
-        -- Unknown command, show help (will be implemented in #56)
-        local configFrame = _hyb.frames and _hyb.frames.config
-        if configFrame then
-            if configFrame:IsVisible() then
-                configFrame:Hide()
-            else
-                configFrame:Show()
-            end
-        end
+        -- Unknown command, show help
+        util.SystemMsg(L["CMD_UNKNOWN"])
+        PrintHelp()
     end
 end
