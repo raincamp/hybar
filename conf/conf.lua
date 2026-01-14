@@ -84,6 +84,11 @@ local function SetupConf()
 			cbWelcome:SetChecked(_hybar_user.welcomeMsg)
 		end
 
+		local cbSound = _G["HYBAR_CHECKBUTTON_SOUND_ENABLED"]
+		if cbSound then
+			cbSound:SetChecked(_hybar_user.soundEnabled)
+		end
+
 		-- Update transparency slider
 		local transparencySlider = _G["HYBAR_SLIDER_TRANSPARENCY"]
 		if transparencySlider then
@@ -124,6 +129,10 @@ local function SetupConf()
 
 	function conf:WelcomeCheckBoxOnClick()
 		_hybar_user.welcomeMsg = self:GetChecked()
+	end
+
+	function conf:SoundEnabledCheckBoxOnClick()
+		_hybar_user.soundEnabled = self:GetChecked()
 	end
 
 	function conf:TransparencySliderOnValueChanged(value)

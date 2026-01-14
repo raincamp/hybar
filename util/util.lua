@@ -87,4 +87,11 @@ util.Button = function(parent, id, x, y, width, height, text)
 	return button
 end
 
+
+util.PlayButtonSound = function()
+	if _hybar_user and _hybar_user.soundEnabled then
+		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+	end
+end
+
 _hyb.util = util

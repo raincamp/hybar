@@ -105,8 +105,22 @@ cbWelcome:SetScript("OnLeave", function(self)
 	GameTooltip:Hide()
 end)
 
+-- sound enabled
+local cbSound = util.Checkbox(optionsFrame, "SOUND_ENABLED", 0, -padding * 7 - 6, L["USER_SOUND_ENABLED"])
+
+cbSound.tooltip = L["USER_SOUND_ENABLED_TOOLTIP"]
+cbSound:SetScript("OnClick", conf.SoundEnabledCheckBoxOnClick)
+cbSound:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip, 1, 1, 1, 1, true)
+	GameTooltip:Show()
+end)
+cbSound:SetScript("OnLeave", function(self)
+	GameTooltip:Hide()
+end)
+
 -- transparency slider
-local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 8 - 10, 200, 0, 1, 0.01,
+local transparencySlider = util.Slider(optionsFrame, "TRANSPARENCY", 0, -padding * 10 - 10, 200, 0, 1, 0.01,
 	L["USER_TRANSPARENCY"])
 
 transparencySlider.tooltip = L["USER_TRANSPARENCY_TOOLTIP"]
@@ -121,7 +135,7 @@ transparencySlider:SetScript("OnLeave", function(self)
 end)
 
 -- scale slider
-local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 11 - 10, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
+local scaleSlider = util.Slider(optionsFrame, "SCALE", 0, -padding * 13 - 10, 200, 0.5, 2.0, 0.05, L["USER_SCALE"])
 
 scaleSlider.tooltip = L["USER_SCALE_TOOLTIP"]
 scaleSlider:SetScript("OnValueChanged", conf.ScaleSliderOnValueChanged)
@@ -135,7 +149,7 @@ scaleSlider:SetScript("OnLeave", function(self)
 end)
 
 -- reset position button
-local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 14 - 10, 150, 22,
+local resetPosButton = util.Button(optionsFrame, "RESET_POSITION", 0, -padding * 16 - 10, 150, 22,
 	L["RESET_POSITION_BUTTON"])
 
 resetPosButton.tooltip = L["RESET_POSITION_BUTTON_TOOLTIP"]
