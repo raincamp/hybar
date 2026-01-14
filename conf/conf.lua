@@ -5,6 +5,15 @@ local L, util = _hyb.locales, _hyb.util
 local function SetupConf()
 	local conf = {}
 
+	-- Combat lockdown check helper
+	local function InCombatCheck()
+		if InCombatLockdown() then
+			util.SystemMsg(L["ERROR_COMBAT"])
+			return true
+		end
+		return false
+	end
+
 	local defaults = {
 		enabled = true,
 		locked = false,
@@ -123,6 +132,11 @@ local function SetupConf()
 	end
 
 	function conf:EnabledCheckBoxOnClick()
+		-- Combat check - revert checkbox if in combat
+		if InCombatCheck() then
+			self:SetChecked(_hybar_user.enabled)
+			return
+		end
 		_hybar_user.enabled = self:GetChecked()
 		local barFrame = _hyb.frames and _hyb.frames.bar
 		local animations = _hyb.animations
@@ -193,6 +207,8 @@ local function SetupConf()
 	end
 
 	function conf:ResetPositionButtonOnClick()
+		-- Combat check
+		if InCombatCheck() then return end
 		-- Reset position to defaults
 		_hybar_user.point = defaults.point
 		_hybar_user.rel_point = defaults.rel_point
@@ -219,6 +235,8 @@ local function SetupConf()
 	end
 
 	function conf.ResetAllSettings()
+		-- Combat check
+		if InCombatCheck() then return end
 		-- Reset all settings to defaults
 		for k, v in pairs(defaults) do
 			_hybar_user[k] = v
