@@ -6,8 +6,7 @@ We actively support the following versions of hybar with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+| 1   | :white_check_mark: |
 
 ## WoW Addon Security Context
 
