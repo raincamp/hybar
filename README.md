@@ -11,7 +11,7 @@
 
 ![hybar banner](assets/hyb-banner.webp)
 
-**a dedicated 2-button action bar for high bar communication**
+action-oriented high bar communication
 
 ---
 
