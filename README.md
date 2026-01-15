@@ -11,7 +11,7 @@
 
 ![hybar banner](assets/hyb-banner.webp)
 
-**A dedicated 2-button action bar for "hell yeah brother" guild chat and yell communication in WoW Burning Crusade Classic Anniversary Edition.**
+**a dedicated 2-button action bar for high bar communication**
 
 ---
 
@@ -150,10 +150,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ## Acknowledgments
 
-- Built for the World of Warcraft TBC Classic Anniversary community
-- Special thanks to all contributors and users who provide feedback
-- Inspired by the need for quick "hell yeah brother" communication
-
----
-
-**Made with ❤️ for the WoW TBC Classic Anniversary community**
+- special thanks to [ExtraThiccText](https://lingojam.com/ExtraThiccText) for the inspiration
