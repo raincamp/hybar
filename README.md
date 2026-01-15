@@ -9,7 +9,7 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/raincamp/hybar)
 ![Last Commit](https://img.shields.io/github/last-commit/raincamp/hybar)
 
-![hybar banner](assets/hyb-banner.webp)
+![hybar banner](assets/hybanner.webp)
 
 action-oriented high bar communication
 
@@ -39,7 +39,7 @@ action-oriented high bar communication
 - **Tooltips**: Helpful descriptions for all controls
 - **Color-Coded Controls**: Visual priority indicators
 
-![hybar in action](assets/screenshot.webp)
+![hybar in action](assets/hyshot.webp)
 
 ---
 
