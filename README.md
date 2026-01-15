@@ -39,6 +39,8 @@
 - **Tooltips**: Helpful descriptions for all controls
 - **Color-Coded Controls**: Visual priority indicators
 
+![hybar in action](assets/screenshot.webp)
+
 ---
 
 ## Installation

@@ -16,3 +16,6 @@ luac.out
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Claude temp files
+tmpclaude*
